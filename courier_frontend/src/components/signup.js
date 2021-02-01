@@ -1,25 +1,33 @@
 import React from 'react'
 
-export default function Signin() {
+export default function Signup() {
     return (
         <div class="d-lg-flex half p-3">
     
-        <div class="bg order-1 order-md-1" ></div>
-        <div class="contents order-2 order-md-2">
+        <div class="bg order-1 order-md-2" ></div>
+        <div class="contents order-2 order-md-1">
     
           <div class="container">
             <div class="row align-items-center justify-content-center">
               <div class="col-md-7">
                 <div class="mb-4">
-                  <h3>Sign In</h3>
+                  <h3>Sign Up</h3>
                   <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p>
                 </div>
                 <form action="#" method="post">
-                  <div class="form-group first">
+
+                <div class="form-group first">
+                    <label for="username">email</label>
+                    <input type="email" class="form-control" id="username"/>
+    
+                </div>
+
+                  <div class="form-group middle">
                     <label for="username">username</label>
                     <input type="text" class="form-control" id="username"/>
     
                   </div>
+
                   <div class="form-group last mb-3">
                     <label for="password">password</label>
                     <input type="password" class="form-control" id="password"/>
@@ -31,10 +39,10 @@ export default function Signin() {
                       <input type="checkbox" />
                       <div class="control__indicator"></div>
                     </label>
-                    <span class="ml-auto"><a href="#" class="forgot-pass">Forgot Password</a></span> 
+                    <span class="ml-auto"><a href="#" class="forgot-pass">Already have an account? </a></span> 
                   </div>
     
-                  <input type="submit" value="Log In" class="btn btn-block btn-primary"/>
+                  <input type="submit" value="Register" class="btn btn-block btn-primary"/>
     
                   
                   

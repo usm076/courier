@@ -46,7 +46,7 @@ h2 {
     }
   
 .half .contents, .half .bg {
-  box-shadow: 0 0 20px 0 rgba(0,0,0,0.6);
+  box-shadow: 0 0 20px 0 rgba(0,0,0,0.35);
   width: 50%; }
   @media (max-width: 1199.98px) {
     .half .contents, .half .bg {
@@ -61,6 +61,8 @@ h2 {
     .half .contents .form-group label, .half .bg .form-group label {
       position: absolute;
       top: 50%;
+      margin-bottom: 20px;
+       
       -webkit-transform: translateY(-50%);
       -ms-transform: translateY(-50%);
       transform: translateY(-50%);
@@ -68,12 +70,22 @@ h2 {
       -o-transition: .3s all ease;
       transition: .3s all ease; }
     .half .contents .form-group input:focus + label, .half .bg .form-group input:focus + label {
-      margin-top: -20px; }
+      top: 17% !important;
+    
+    }
     .half .contents .form-group.first, .half .bg .form-group.first {
       border-top-left-radius: 7px;
       border-top-right-radius: 7px;
       border-bottom: none !important;
     border: 1px solid rgba(0,0,0,0.3); }
+
+    
+    .half .contents .form-group.middle, .half .bg .form-group.middle {
+      border-top-left-radius: 0px;
+      border-top-right-radius: 0px;
+      border-bottom: none !important;
+    border: 1px solid rgba(0,0,0,0.3); }
+
     .half .contents .form-group.last, .half .bg .form-group.last {
       border-bottom: 1px solid #efefef;
       border-bottom-left-radius: 7px;
@@ -88,9 +100,9 @@ h2 {
       margin-top: -20px; }
   .half .contents .form-control, .half .bg .form-control {
     border: none;
-    padding: 0 !important;
-    height: 20px;
-    font-size: 20px;
+    padding: 0 14px 0 0 ;
+    height: 22px;
+    font-size: 16px;
     border-radius: 0; }
     .half .contents .form-control:active, .half .contents .form-control:focus, .half .bg .form-control:active, .half .bg .form-control:focus {
       outline: none;
@@ -100,9 +112,11 @@ h2 {
 .half .bg {
   background-size: cover;
   background-position: center; 
-  box-shadow: 0 0 20px 0 rgba(0,0,0,0.6);
+  box-shadow: 0 0 20px 0 rgba(0,0,0,0.35);
 }
-
+.form-control::placeholder {
+  color: red;
+}
 .half a {
   color: #888;
   text-decoration: underline; }
@@ -193,4 +207,8 @@ h2 {
 
 .bg.order-1.order-md-1{
   background-image: url('images/bg_1.jpg');
+}
+
+.bg.order-1.order-md-2{
+  background-image: url('images/bg_2.jpg');
 }
