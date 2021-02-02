@@ -264,6 +264,12 @@ h2 {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
+}
+
+
+.modal-header{
+  border: none !important;
 }
 
 .fa-clock-o{
@@ -356,3 +362,12 @@ h2 {
   user-select: none;
   flex-shrink: 0;
 }
+
+.text-box{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 5%;
+  
+}
+

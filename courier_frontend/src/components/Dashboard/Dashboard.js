@@ -1,4 +1,4 @@
-import React from 'react';
+import React , {useState} from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -9,7 +9,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
-
+import {Modal} from 'react-bootstrap'
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
@@ -22,6 +22,9 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems } from './listItems';
 import Deposits from './Deposits';
 import Orders from './Orders';
+
+import TextField from '@material-ui/core/TextField';
+import Title from './Title';
 
 function Copyright() {
   return (
@@ -137,6 +140,10 @@ export default function Dashboard() {
     setOpen(false);
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   return (
     <div className={classes.root}>
@@ -202,15 +209,21 @@ export default function Dashboard() {
             </Typography>
             </div>
         </div>
-        
+            </React.Fragment> : null}
+        <List>{mainListItems}</List>
+       
         <div class="add-ship">
         <Button variant="contained" style={{background : "#006AEE" , color : "#fff" , width : "82.5%", marginTop : 20}}>
             ADD SHIPMENT
         </Button>
+        <Button variant="contained" style={{background : "#006AEE" , color : "#fff" , width : "82.5%", marginTop : 20}}>
+            ADD STAFF
+        </Button>
+        <Button variant="contained" onClick={handleShow} style={{background : "#006AEE" , color : "#fff" , width : "82.5%", marginTop : 20}}>
+            BOOK COURIER
+        </Button>
             </div>
-            </React.Fragment> : null}
-        <List>{mainListItems}</List>
-       
+        
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
@@ -234,6 +247,41 @@ export default function Dashboard() {
           </Box>
         </Container>
       </main>
+      
+      <Modal show={show} onHide={handleClose} style={{marginTop: 100}}>
+        <Modal.Header closeButton>
+         <Typography component="p" className="emp-tag" variant="p">
+             BOOK COURIER
+         </Typography>
+        </Modal.Header>
+        <Modal.Body>
+            <form>
+              <Title>RECIEVER</Title>    
+            
+            <div className="text-box">  
+            <TextField id="standard-basic" label="Name" />
+            <TextField id="standard-basic" label="CNIC" />
+            </div>
+            <div className="text-box">  
+            <TextField id="standard-basic" label="Address" />
+            <TextField id="standard-basic" label="Contact No" />
+            </div>
+
+            <Title>SENDER</Title>    
+            
+            <div className="text-box">  
+            <TextField id="standard-basic" label="Name" />
+            <TextField id="standard-basic" label="CNIC" />
+            </div>
+            <div className="text-box">  
+            <TextField id="standard-basic" label="Address" />
+            <TextField id="standard-basic" label="Contact No" />
+            </div>
+            </form>
+        </Modal.Body>
+        
+      </Modal>
+      
     </div>
   );
 }
