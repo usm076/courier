@@ -4,11 +4,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
+
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
@@ -126,6 +127,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Dashboard() {
+      
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -150,14 +152,27 @@ export default function Dashboard() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Dashboard
-          </Typography>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
+          <div className={classes.title} style={{display : "flex"}}>
+            <i class="fa fa-clock-o" aria-hidden="true"></i>
+            <Typography component="p" className="emp-tag date" variant="p">
+             {Date().toLocaleString().substring(0,24)}
+            </Typography>
+         
+          </div>
+         
+          <div className="d-flex" >
+
+          <Typography component="p" variant="p" className="emp-tag middle" style={{marginTop : 6}}>
+             Hi , Employee
+            </Typography>
+            <div className="emp-box-app">
+                <h1 className="emp-tag-app">EM</h1>
+            </div>
+             
+           
+            
+           </div>
+          
         </Toolbar>
       </AppBar>
       <Drawer
@@ -172,7 +187,9 @@ export default function Dashboard() {
             <ChevronLeftIcon />
           </IconButton>
         </div>
-        <div className="d-flex">
+        {open? 
+             <React.Fragment>
+             <div className="d-flex" >
             <div className="emp-box">
                 <h1 className="emp-tag">EM</h1>
             </div>
@@ -185,6 +202,13 @@ export default function Dashboard() {
             </Typography>
             </div>
         </div>
+        
+        <div class="add-ship">
+        <Button variant="contained" style={{background : "#006AEE" , color : "#fff" , width : "82.5%", marginTop : 20}}>
+            ADD SHIPMENT
+        </Button>
+            </div>
+            </React.Fragment> : null}
         <List>{mainListItems}</List>
        
       </Drawer>
@@ -194,9 +218,9 @@ export default function Dashboard() {
           <Grid container spacing={3}>
             {/* Recent Deposits */}
             <Grid item xs={12} md={12} lg={12}>
-              <Paper className={fixedHeightPaper}>
+            
                 <Deposits />
-              </Paper>
+              
             </Grid>
             {/* Recent Orders */}
             <Grid item xs={12}>

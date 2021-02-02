@@ -14,19 +14,19 @@ export const mainListItems = (
   <div>
     <ListItem button>
       <ListItemIcon>
-        <DashboardIcon />
-      </ListItemIcon>
+        <DashboardIcon style={{color : "#006AEE", transform : "translateX(25%)"}}/>
+      </ListItemIcon >
       <ListItemText primary="Dashboard" />
     </ListItem>
     <ListItem button>
       <ListItemIcon>
-        <ShoppingCartIcon />
+        <ShoppingCartIcon style={{color : "#006AEE", transform : "translateX(25%)"}}/>
       </ListItemIcon>
       <ListItemText primary="Shipment List" />
     </ListItem>
     <ListItem button>
       <ListItemIcon>
-        <PeopleIcon />
+        <PeopleIcon style={{color : "#006AEE", transform : "translateX(25%)"}}/>
       </ListItemIcon>
       <ListItemText primary="Customer List" />
     </ListItem>
