@@ -50,9 +50,10 @@ export default function Orders() {
             <TableCell>Name</TableCell>
             <TableCell>Ship To</TableCell>
             <TableCell>Payment Method</TableCell>
+            
+            <TableCell>Sale Amount</TableCell>
             <TableCell>Edit</TableCell>
-            <TableCell>Delete</TableCell>
-            <TableCell align="right">Sale Amount</TableCell>
+            <TableCell >Delete</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -62,6 +63,8 @@ export default function Orders() {
               <TableCell>{row.name}</TableCell>
               <TableCell>{row.shipTo}</TableCell>
               <TableCell>{row.paymentMethod}</TableCell>
+              
+              <TableCell >{row.amount}</TableCell>
               <TableCell>
               <Button
         variant="contained"
@@ -73,7 +76,7 @@ export default function Orders() {
         Edit
       </Button>
               </TableCell>
-              <TableCell>
+              <TableCell >
               <Button
         variant="contained"
         color="secondary"
@@ -84,7 +87,6 @@ export default function Orders() {
         Delete
       </Button>
               </TableCell>
-              <TableCell align="right">{row.amount}</TableCell>
             </TableRow>
           ))}
         </TableBody>

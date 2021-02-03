@@ -378,7 +378,11 @@ h2 {
   justify-content: center;
 }
 
-
+.center-eve.bg{
+  background-image: url(./images/bg6.jpg);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
 .mainHomePage{
  
 }

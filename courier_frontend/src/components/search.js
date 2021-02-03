@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
@@ -7,6 +7,9 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import DirectionsIcon from '@material-ui/icons/Directions';
+import {Modal} from 'react-bootstrap'
+
+import TextField from '@material-ui/core/TextField';
 import AppBar from '@material-ui/core/AppBar';
 import clsx from 'clsx';
 import Typography from '@material-ui/core/Typography';
@@ -48,9 +51,14 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Search() {
   const classes = useStyles();
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = (e) => { e.preventDefault(); setShow(true) };
+
 
   return (
-      <div className="center-eve" style={{height : '90vh'}}>
+      <div className="center-eve bg" style={{height : '100vh'}}>
            <AppBar position="absolute" className={clsx(classes.appBar)}>
         <Toolbar className={classes.toolbar}>
               <div className={classes.title} style={{display : "flex", flexGrow: 1}}>
@@ -87,10 +95,27 @@ export default function Search() {
       />
  
       <Divider className={classes.divider} orientation="vertical" />
-      <IconButton type="submit" className={classes.iconButton} aria-label="search">
+      <IconButton type="submit" className={classes.iconButton} aria-label="search" onClick={handleShow}>
         <SearchIcon />
       </IconButton>
     </Paper>
+    <Modal show={show} onHide={handleClose} style={{marginTop: 100}}>
+        <Modal.Header closeButton>
+         <Typography component="p" className="emp-tag" variant="p">
+             Courier Track
+         </Typography>
+        </Modal.Header>
+        <Modal.Body>
+            <div className="center-eve">
+
+            <Typography component="p" className="emp-tag text-dark p-5 mb-5" variant="p">
+             Your Courier Has Arrived !
+         </Typography>
+            </div>
+        </Modal.Body>
+        
+      </Modal>
+
     </div>
   );
 }
