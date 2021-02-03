@@ -145,6 +145,11 @@ export default function Dashboard() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const [showStaff, setShowStaff] = useState(false);
+
+  const handleStaffClose = () => setShowStaff(false);
+  const handleStaffShow = () => setShowStaff(true);
+
   return (
     <div className={classes.root}>
       <CssBaseline />
@@ -216,7 +221,7 @@ export default function Dashboard() {
         <Button variant="contained" style={{background : "#006AEE" , color : "#fff" , width : "82.5%", marginTop : 20}}>
             ADD SHIPMENT
         </Button>
-        <Button variant="contained" style={{background : "#006AEE" , color : "#fff" , width : "82.5%", marginTop : 20}}>
+        <Button variant="contained"  onClick={handleStaffShow} style={{background : "#006AEE" , color : "#fff" , width : "82.5%", marginTop : 20}}>
             ADD STAFF
         </Button>
         <Button variant="contained" onClick={handleShow} style={{background : "#006AEE" , color : "#fff" , width : "82.5%", marginTop : 20}}>
@@ -248,7 +253,7 @@ export default function Dashboard() {
         </Container>
       </main>
       
-      <Modal show={show} onHide={handleClose} style={{marginTop: 100}}>
+      <Modal show={show} onHide={handleClose} style={{marginTop: 50}}>
         <Modal.Header closeButton>
          <Typography component="p" className="emp-tag" variant="p">
              BOOK COURIER
@@ -276,6 +281,39 @@ export default function Dashboard() {
             <div className="text-box">  
             <TextField id="standard-basic" label="Address" />
             <TextField id="standard-basic" label="Contact No" />
+            </div>
+
+            <div className="center-eve">
+            <Button variant="contained" style={{background : "#006AEE" , color : "#fff" , width : "82.5%", marginTop : 20}}>
+              Submit
+            </Button>  
+            </div>
+            </form>
+        </Modal.Body>
+        
+      </Modal>
+
+
+      <Modal show={showStaff} onHide={handleStaffClose} style={{marginTop: 50}}>
+        <Modal.Header closeButton>
+         <Typography component="p" className="emp-tag" variant="p">
+             ADD STAFF
+         </Typography>
+        </Modal.Header>
+        <Modal.Body>
+            <form>
+            <div className="text-box">  
+            <TextField id="standard-basic" label="Name" />
+            <TextField id="standard-basic" label="email" />
+            </div>
+            <div className="text-box">  
+            <TextField id="standard-basic" label="City" />
+            <TextField id="standard-basic" label="Contact No" />
+            </div>
+            <div className="center-eve">
+            <Button variant="contained" style={{background : "#006AEE" , color : "#fff" , width : "82.5%", marginTop : 20}}>
+              Submit
+            </Button>  
             </div>
             </form>
         </Modal.Body>

@@ -1,6 +1,6 @@
 body {
   font-family: "Roboto", sans-serif;
-  background-color: #fff; }
+  background-color: #ddd; }
 
 p {
   color: #b3b3b3;
@@ -371,3 +371,42 @@ h2 {
   
 }
 
+
+.center-eve{
+  display: flex;
+  align-items: center !important;
+  justify-content: center;
+}
+
+
+.mainHomePage{
+ 
+}
+.searchBox{
+  position: absolute;
+  top:50%;
+  left: 50%;
+  transform: translate(-50%, -50%) 
+}
+.searchBox > input[type='text']{
+  width:405px;
+  height:45px;
+  border-radius: 25px 0px 0px 25px;
+  background: #fff;
+  outline:none;
+  
+  border: 0.01rem solid rgba(0, 0, 0, 0.5);
+  padding:0px 10px;
+  
+}
+.searchBox > input[type='button']{
+  background:#ffc107;
+  color:#fff;
+  outline:none;
+  height:45px;
+  width:70px;
+  border: 0.01rem solid rgba(0, 0, 0, 0.5);
+  border-radius: 0px 25px 25px 0px;
+  margin-left:-5px;
+  cursor:pointer;
+}
