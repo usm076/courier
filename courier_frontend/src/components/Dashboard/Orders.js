@@ -7,7 +7,9 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
-
+import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
+import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 
 // Generate Order Data
@@ -48,6 +50,8 @@ export default function Orders() {
             <TableCell>Name</TableCell>
             <TableCell>Ship To</TableCell>
             <TableCell>Payment Method</TableCell>
+            <TableCell>Edit</TableCell>
+            <TableCell>Delete</TableCell>
             <TableCell align="right">Sale Amount</TableCell>
           </TableRow>
         </TableHead>
@@ -58,6 +62,28 @@ export default function Orders() {
               <TableCell>{row.name}</TableCell>
               <TableCell>{row.shipTo}</TableCell>
               <TableCell>{row.paymentMethod}</TableCell>
+              <TableCell>
+              <Button
+        variant="contained"
+        color="primary"
+        size="small"
+        className={classes.button}
+        startIcon={<EditIcon />}
+      >
+        Edit
+      </Button>
+              </TableCell>
+              <TableCell>
+              <Button
+        variant="contained"
+        color="secondary"
+        size="small"
+        className={classes.button}
+        startIcon={<DeleteIcon />}
+      >
+        Delete
+      </Button>
+              </TableCell>
               <TableCell align="right">{row.amount}</TableCell>
             </TableRow>
           ))}
