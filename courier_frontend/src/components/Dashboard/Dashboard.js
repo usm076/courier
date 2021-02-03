@@ -30,7 +30,7 @@ function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="inherit">
         Your Website
       </Link>{' '}
       {new Date().getFullYear()}
@@ -217,7 +217,7 @@ export default function Dashboard() {
             </React.Fragment> : null}
         <List>{mainListItems}</List>
        
-        <div class="add-ship">
+      {open?  <div class="add-ship">
         <Button variant="contained" style={{background : "#006AEE" , color : "#fff" , width : "82.5%", marginTop : 20}}>
             ADD SHIPMENT
         </Button>
@@ -227,7 +227,7 @@ export default function Dashboard() {
         <Button variant="contained" onClick={handleShow} style={{background : "#006AEE" , color : "#fff" , width : "82.5%", marginTop : 20}}>
             BOOK COURIER
         </Button>
-            </div>
+            </div> : null} 
         
       </Drawer>
       <main className={classes.content}>
