@@ -1,4 +1,4 @@
-import React , {useState} from 'react';
+import React , {useEffect, useState} from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -25,6 +25,7 @@ import Orders from './Orders';
 
 import TextField from '@material-ui/core/TextField';
 import Title from './Title';
+import axios from 'axios';
 
 function Copyright() {
   return (
@@ -130,6 +131,78 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Dashboard() {
+  const axios = require('axios');
+
+  const [state, setState] = useState({
+		name : '',
+		email: '',
+		pass: ''
+		
+    });
+
+    const [result, setResult] = useState(null);
+
+    const  handleSubmit = async event => {
+      event.preventDefault();
+      //alert();
+      // await reRef.current.executeAsync();
+      // const captchaToken=reRef.current.getValue();
+  
+  
+      //  const captchaToken = await reRef.current.executeAsync(); 
+        //reRef.current.reset();
+        //console.log( "Captcha Token :"+captchaToken);http://localhost:9000/api/addpackage
+        //const auth = localStorage.getItem('auth-token');
+      
+      
+        //Starts here
+      //   const tokn = localStorage.getItem("auth-token");
+      //   var config = {
+      //   method: 'post',
+      //   // data : {...state},
+      //   url: 'http://localhost:9000/api/addpackage',
+      //   headers: { 
+      //   'x-auth-token': tokn
+      //   }
+      //   };
+      //   axios(config)
+      //   .then(function (response) {
+      //   console.log(JSON.stringify(response.data));
+      //   })
+      //   .catch(function (error) {
+      //   console.log(error);
+      //   });
+      //  // alert()
+      const token = localStorage.getItem('auth-token');
+      axios
+        .post('http://localhost:9000/api/addpackage', { ...state }, {headers :{'x-auth-token': token}})
+        .then(response => {
+          console.log(response);
+        })
+        .catch(() => {
+        setResult({
+          success: false,
+          message: 'Something went wrong. Try again later'
+        });
+        });
+
+
+      //Ends Here
+      };
+      
+
+      const onInputChange = event => {
+        const { name, value } = event.target;
+      
+        setState({
+          ...state,
+          [name]: value
+        });
+        };
+
+
+
+    //Ended Here
       
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
@@ -149,6 +222,40 @@ export default function Dashboard() {
 
   const handleStaffClose = () => setShowStaff(false);
   const handleStaffShow = () => setShowStaff(true);
+
+  useEffect(()=>{
+    const token = localStorage.getItem('auth-token');
+    axios
+      .post('http://localhost:9000/dashboarddata',  {headers :{'x-auth-token': token}})
+      .then(response => {
+        console.log(response);
+      })
+      .catch(() => {
+      setResult({
+        success: false,
+        message: 'Something went wrong. Try again later'
+      });
+      });
+        // const tokn = localStorage.getItem("auth-token");
+        // var config = {
+        // method: 'post',
+        // url: 'http://localhost:9000/dashboarddata',
+        // headers: { 
+        // 'x-auth-token': tokn
+        // }
+        // };
+        // axios(config)
+        // .then(function (response) {
+        // console.log(JSON.stringify(response.data));
+        // })
+        // .catch(function (error) {
+        // console.log(error);
+        // });
+
+    
+    
+    
+  })
 
   return (
     <div className={classes.root}>
@@ -260,31 +367,36 @@ export default function Dashboard() {
          </Typography>
         </Modal.Header>
         <Modal.Body>
-            <form>
+            {result && (
+            <p className={`${result.success ? 'success' : 'error'}`}>
+            {result.message}
+            </p>
+            )}
+            <form onSubmit={handleSubmit}>
               <Title>RECIEVER</Title>    
             
             <div className="text-box">  
-            <TextField id="standard-basic" label="Name" />
-            <TextField id="standard-basic" label="CNIC" />
+            <TextField id="standard-basic" label="Name" onChange={onInputChange}  value={state.r_name} required />
+            <TextField id="standard-basic" label="NID" onChange={onInputChange}  value={state.r_nID} required />
             </div>
             <div className="text-box">  
-            <TextField id="standard-basic" label="Address" />
-            <TextField id="standard-basic" label="Contact No" />
+            <TextField id="standard-basic" label="Address" onChange={onInputChange}  value={state.r_address} required />
+            <TextField id="standard-basic" label="Contact No" onChange={onInputChange}  value={state.r_contact} required />
             </div>
 
             <Title>SENDER</Title>    
             
             <div className="text-box">  
-            <TextField id="standard-basic" label="Name" />
-            <TextField id="standard-basic" label="CNIC" />
+            <TextField id="standard-basic" label="Name" onChange={onInputChange}  value={state.s_name} required/>
+            <TextField id="standard-basic" label="CNIC" onChange={onInputChange}  value={state.s_nID} required/>
             </div>
             <div className="text-box">  
-            <TextField id="standard-basic" label="Address" />
-            <TextField id="standard-basic" label="Contact No" />
+            <TextField id="standard-basic" label="Address" onChange={onInputChange}  value={state.s_address} required />
+            <TextField id="standard-basic" label="Contact No" onChange={onInputChange}  value={state.s_contact} required/>
             </div>
 
             <div className="center-eve">
-            <Button variant="contained" style={{background : "#006AEE" , color : "#fff" , width : "82.5%", marginTop : 20}}>
+            <Button type="submit" variant="contained" style={{background : "#006AEE" , color : "#fff" , width : "82.5%", marginTop : 20}}>
               Submit
             </Button>  
             </div>
