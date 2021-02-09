@@ -7,7 +7,7 @@ var Cryptr = require('cryptr');
 const { body, validationResult } = require('express-validator');
 const dotenv = require('dotenv');
 var User = require('./schemas/mongo_users');
-var EmailVerification = require('./schemas/mongo_package');
+var package = require('./schemas/mongo_package');
 dotenv.config();
 const jwt = require('jsonwebtoken');
 const withAuth = require('./middleware/jwtTokenMiddleware');
@@ -29,8 +29,25 @@ var userid=0;
 
 /* GET home page. */
 router.post('/', withAuth , async function(req, res, next) {
-  
+
+  package.find({}, function(error, packages)
+  {
+    if(error)
+    {
+      console.log("This is error :" ,error);
+    }
+    else
+    {
+
+      res.json({
+        status : 200,
+         packages
+      })
+      
+    }
+  })
   //res.send(req.jwtId);
+  //res.sendStatus(200);
   
 
  

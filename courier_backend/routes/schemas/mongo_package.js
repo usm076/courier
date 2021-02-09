@@ -11,7 +11,7 @@ const packageSchema = new Schema
     s_nationalId : String, 
     s_address : String, 
     s_contact : String,
-    p_lenght : mongoose.Decimal128,
+    p_length : mongoose.Decimal128,
     p_height : mongoose.Decimal128,
     p_width : mongoose.Decimal128,
     createdOn : Date

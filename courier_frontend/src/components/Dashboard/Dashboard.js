@@ -131,12 +131,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Dashboard() {
+  const packages_data='';
   const axios = require('axios');
+  const [count, setCount] = useState(0);
+ 
 
   const [state, setState] = useState({
-		name : '',
-		email: '',
-		pass: ''
+		r_name : '',
+		r_nID: '',
+		r_address: '',
+    r_contact : '',
+    s_name : '',
+    s_nID : '',
+    s_address : '',
+    s_contact : ''
 		
     });
 
@@ -144,35 +152,7 @@ export default function Dashboard() {
 
     const  handleSubmit = async event => {
       event.preventDefault();
-      //alert();
-      // await reRef.current.executeAsync();
-      // const captchaToken=reRef.current.getValue();
-  
-  
-      //  const captchaToken = await reRef.current.executeAsync(); 
-        //reRef.current.reset();
-        //console.log( "Captcha Token :"+captchaToken);http://localhost:9000/api/addpackage
-        //const auth = localStorage.getItem('auth-token');
-      
-      
-        //Starts here
-      //   const tokn = localStorage.getItem("auth-token");
-      //   var config = {
-      //   method: 'post',
-      //   // data : {...state},
-      //   url: 'http://localhost:9000/api/addpackage',
-      //   headers: { 
-      //   'x-auth-token': tokn
-      //   }
-      //   };
-      //   axios(config)
-      //   .then(function (response) {
-      //   console.log(JSON.stringify(response.data));
-      //   })
-      //   .catch(function (error) {
-      //   console.log(error);
-      //   });
-      //  // alert()
+     
       const token = localStorage.getItem('auth-token');
       axios
         .post('http://localhost:9000/api/addpackage', { ...state }, {headers :{'x-auth-token': token}})
@@ -217,6 +197,7 @@ export default function Dashboard() {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  
 
   const [showStaff, setShowStaff] = useState(false);
 
@@ -225,10 +206,20 @@ export default function Dashboard() {
 
   useEffect(()=>{
     const token = localStorage.getItem('auth-token');
+    
     axios
-      .post('http://localhost:9000/dashboarddata',  {headers :{'x-auth-token': token}})
+      .post('http://localhost:9000/dashboarddata',{"name" : "usman"},   {headers :{'x-auth-token': token}})
       .then(response => {
-        console.log(response);
+        //console.log(response.data.packages);
+        
+          packages_data = response.data.packages;
+          localStorage.setItem("packages",packages_data);
+          //const rows = [createData(packages_data)];
+
+          console.log(packages_data);
+        
+        
+        
       })
       .catch(() => {
       setResult({
@@ -255,7 +246,7 @@ export default function Dashboard() {
     
     
     
-  })
+  }, [count])
 
   return (
     <div className={classes.root}>
@@ -376,23 +367,23 @@ export default function Dashboard() {
               <Title>RECIEVER</Title>    
             
             <div className="text-box">  
-            <TextField id="standard-basic" label="Name" onChange={onInputChange}  value={state.r_name} required />
-            <TextField id="standard-basic" label="NID" onChange={onInputChange}  value={state.r_nID} required />
+            <TextField id="standard-basic" label="Name" name = "r_name" onChange={onInputChange}  value={state.r_name} required />
+            <TextField id="standard-basic" label="NID" name = "r_nID" onChange={onInputChange}  value={state.r_nID} required />
             </div>
             <div className="text-box">  
-            <TextField id="standard-basic" label="Address" onChange={onInputChange}  value={state.r_address} required />
-            <TextField id="standard-basic" label="Contact No" onChange={onInputChange}  value={state.r_contact} required />
+            <TextField id="standard-basic" label="Address" name = "r_address" onChange={onInputChange}  value={state.r_address} required />
+            <TextField id="standard-basic" label="Contact No" name = "r_contact" onChange={onInputChange}  value={state.r_contact} required />
             </div>
 
             <Title>SENDER</Title>    
             
             <div className="text-box">  
-            <TextField id="standard-basic" label="Name" onChange={onInputChange}  value={state.s_name} required/>
-            <TextField id="standard-basic" label="CNIC" onChange={onInputChange}  value={state.s_nID} required/>
+            <TextField id="standard-basic" label="Name" name = "s_name" onChange={onInputChange}  value={state.s_name} required/>
+            <TextField id="standard-basic" label="CNIC" name = "s_nID" onChange={onInputChange}  value={state.s_nID} required/>
             </div>
             <div className="text-box">  
-            <TextField id="standard-basic" label="Address" onChange={onInputChange}  value={state.s_address} required />
-            <TextField id="standard-basic" label="Contact No" onChange={onInputChange}  value={state.s_contact} required/>
+            <TextField id="standard-basic" label="Address" name = "s_address" onChange={onInputChange}  value={state.s_address} required />
+            <TextField id="standard-basic" label="Contact No" name = "s_contact" onChange={onInputChange}  value={state.s_contact} required/>
             </div>
 
             <div className="center-eve">
