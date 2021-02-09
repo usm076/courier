@@ -28,7 +28,7 @@ var success = 1 ;
 var userid=0;
 
 /* GET home page. */
-router.post('/', withAuth , async function(req, res, next) {
+router.post('/', async function(req, res, next) {
 
   package.find({}, function(error, packages)
   {

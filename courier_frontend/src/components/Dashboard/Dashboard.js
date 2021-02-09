@@ -149,6 +149,7 @@ export default function Dashboard() {
     });
 
     const [result, setResult] = useState(null);
+    const [Data, setData] = useState([]);
 
     const  handleSubmit = async event => {
       event.preventDefault();
@@ -214,6 +215,7 @@ export default function Dashboard() {
         
           packages_data = response.data.packages;
           localStorage.setItem("packages",packages_data);
+          setData(packages_data);
           //const rows = [createData(packages_data)];
 
           console.log(packages_data);
@@ -341,7 +343,7 @@ export default function Dashboard() {
             {/* Recent Orders */}
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                <Orders />
+                <Orders  mydata={Data}/>
               </Paper>
             </Grid>
           </Grid>

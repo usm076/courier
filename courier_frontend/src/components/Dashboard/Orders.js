@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Orders() {
+export default function Orders(props) {
   const classes = useStyles();
   const [age, setAge] = React.useState('');
 
@@ -87,12 +87,12 @@ export default function Orders() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {props.mydata.map((row) => (
             <TableRow key={row.id}>
-              <TableCell>{row.date}</TableCell>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.shipTo}</TableCell>
-              <TableCell>{row.paymentMethod}</TableCell>
+              <TableCell>{row.r_name}</TableCell>
+              <TableCell>{row.s_address}</TableCell>
+              <TableCell>{row.s_name}</TableCell>
+              <TableCell>{row.s_contact}</TableCell>
               
               <TableCell >{row.amount}</TableCell>
               <TableCell>    <FormControl className={classes.formControl}>
