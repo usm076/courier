@@ -131,7 +131,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Dashboard() {
-  const packages_data='';
+  var packages_data=[];
   const axios = require('axios');
   const [count, setCount] = useState(0);
  
@@ -159,6 +159,12 @@ export default function Dashboard() {
         .post('http://localhost:9000/api/addpackage', { ...state }, {headers :{'x-auth-token': token}})
         .then(response => {
           console.log(response);
+          setResult({
+            success: true,
+            message: 'Courier booked'
+          });
+          setCount(count+1);
+          handleClose();
         })
         .catch(() => {
         setResult({
@@ -211,11 +217,12 @@ export default function Dashboard() {
     axios
       .post('http://localhost:9000/dashboarddata',{"name" : "usman"},   {headers :{'x-auth-token': token}})
       .then(response => {
-        //console.log(response.data.packages);
+       // console.log(response);
+        console.log(response.data.packages);
         
           packages_data = response.data.packages;
           localStorage.setItem("packages",packages_data);
-          setData(packages_data);
+          setData(response.data.packages);
           //const rows = [createData(packages_data)];
 
           console.log(packages_data);
@@ -223,10 +230,11 @@ export default function Dashboard() {
         
         
       })
-      .catch(() => {
+      .catch((error) => {
+        console.log(error);
       setResult({
         success: false,
-        message: 'Something went wrong. Try again later'
+        message: 'Something went wrong 1. Try again later'
       });
       });
         // const tokn = localStorage.getItem("auth-token");

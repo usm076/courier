@@ -7,6 +7,8 @@ var logger = require('morgan');
 var registerRouter = require('./routes/register');
 var dashboardData = require('./routes/dashboardDataApi');
 var addPackage = require('./routes/addPackageApi');
+var addPackageDimension = require('./routes/addPackageDimensionApi');
+var deletePackage = require('./routes/deletePackageApi');
 
 //var PinRouter = require('./routes/pinApi.js');
 var bodyParser = require('body-parser');
@@ -50,6 +52,8 @@ app.use(express.static(path.join(__dirname, 'public')));
  app.use('/register', registerRouter);
  app.use('/dashboarddata', dashboardData);
  app.use('/api/addpackage', addPackage);
+ app.use('/api/addpackagedimension', addPackageDimension);
+ app.use('/api/deletepackage', deletePackage);
 // app.use('/register', signupRouter);
 // app.use('/signin', loginRouter);
 // app.use('/verify', verifyRouter);

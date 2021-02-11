@@ -19,6 +19,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Select from '@material-ui/core/Select';
+import axios from 'axios';
 
 
 // Generate Order Data
@@ -52,8 +53,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Orders(props) {
+  var [currentId, setCurrentId] = useState(null);
   const classes = useStyles();
   const [age, setAge] = React.useState('');
+  const [packageState, setPackageVariables] = useState({
+    height : 0,
+    length : 0,
+    width : 0 
+  });
 
   const handleChange = (event) => {
     setAge(event.target.value);
@@ -64,6 +71,46 @@ export default function Orders(props) {
   const handlePackageClose = () => setShowPackage(false);
   const handlePackageShow = () => setShowPackage(true);
 
+  const onPackageDetailChange= event =>{
+    const { name, value } = event.target;
+      
+    setPackageVariables({
+          ...packageState,
+          [name]: value
+        });
+
+  }
+
+  const handlePackageSubmit = (event, pack_id) => {
+
+    event.preventDefault();
+    //alert(currentId);
+    var authToken = localStorage.getItem('auth-token');
+    axios.post('http://localhost:9000/api/addpackagedimension', {...packageState, package_id : pack_id}, {headers:{
+      'x-auth-token' : authToken
+    }}).then((response)=>{
+      console.log(response);
+
+    }).catch((error)=>{
+      console.log(error);
+    })
+
+
+
+  }
+  const handlePackageDeletion = (pack_id) =>{
+    const authToken = localStorage.getItem('auth-token');
+    axios.post('http://localhost:9000/api/deletepackage', {id : pack_id}, {headers : {
+      'x-auth-token' : authToken
+    }}).then((response)=>{
+      // Trigger successful flag and reload the table data
+
+    }).catch((error)=>{
+
+    })
+    
+  }
+
   return (
     <React.Fragment>
        <Typography component="p" className="emp-tag" variant="p">
@@ -73,28 +120,33 @@ export default function Orders(props) {
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Ship To</TableCell>
-            <TableCell>Payment Method</TableCell>
+            <TableCell>Package ID</TableCell>
+            <TableCell>Sender name</TableCell>
+            <TableCell>Receiver name</TableCell>
+            <TableCell>Receiver address</TableCell>
             
-            <TableCell>Sale Amount</TableCell>
+            <TableCell>Receiver Contact</TableCell>
             <TableCell>Status</TableCell>
-            <TableCell>Add Package</TableCell>
-            <TableCell>Edit</TableCell>
+             <TableCell>Add Package</TableCell>
+
+            
+            
+            <TableCell>Edit</TableCell> 
             <TableCell >Delete</TableCell>
             <TableCell >Print</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {props.mydata.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell>{row.r_name}</TableCell>
-              <TableCell>{row.s_address}</TableCell>
+            <TableRow key={row._id}>
+              <TableCell>{row._id}</TableCell>
               <TableCell>{row.s_name}</TableCell>
-              <TableCell>{row.s_contact}</TableCell>
+              <TableCell>{row.r_name}</TableCell>
+              <TableCell>{row.r_address}</TableCell>
+              <TableCell>{row.r_contact}</TableCell>
+              {/* <TableCell>{row.s_contact}</TableCell> */}
               
-              <TableCell >{row.amount}</TableCell>
+              {/* <TableCell >{row.amount}</TableCell> */}
               <TableCell>    <FormControl className={classes.formControl}>
       
         <Select
@@ -103,9 +155,8 @@ export default function Orders(props) {
           value={age}
           onChange={handleChange}
         >
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          <MenuItem value={row.status}>{row.status}</MenuItem>
+          
         </Select>
       </FormControl>
       </TableCell>
@@ -115,7 +166,7 @@ export default function Orders(props) {
         color="primary"
         size="small"
         className={classes.button}
-        onClick = {handlePackageShow}
+        onClick = {()=>{setCurrentId(row._id); handlePackageShow(row._id); }}
       >
         Add
       </Button>
@@ -125,6 +176,7 @@ export default function Orders(props) {
         variant="contained"
         color="info"
         size="small"
+        
         className={classes.button}
         startIcon={<EditIcon />}
       >
@@ -138,13 +190,15 @@ export default function Orders(props) {
         size="small"
         className={classes.button}
         startIcon={<DeleteIcon />}
+        onClick = {()=>{setCurrentId(row._id); handlePackageDeletion(row._id); }}
       >
         Delete
-      </Button>
+      </Button >
               </TableCell>
          
               <TableCell >
-              <Button
+              <Button 
+              
         variant="contained"
         color="warning"
         size="small"
@@ -171,23 +225,23 @@ export default function Orders(props) {
          </Typography>
         </Modal.Header>
         <Modal.Body>
-            <form>
+            <form onSubmit={handlePackageSubmit}>
             <div className="text-box-2">  
-            <TextField id="standard-basic" label="Length" />
+            <TextField id="standard-basic" name="length" label="Length" onChange={onPackageDetailChange}  value={packageState.length} required />
             <Typography component="p" className="emp-tag mt-3" variant="p">
              X
            </Typography>
-            <TextField id="standard-basic" label="Width" />
+            <TextField id="standard-basic" name="width" label="Width" onChange={onPackageDetailChange}  value={packageState.width} required />
             <Typography component="p" className="emp-tag mt-3" variant="p ">
              X
             </Typography>
-            <TextField id="standard-basic" label="Height" />
+            <TextField id="standard-basic" name="height" label="Height"  onChange={onPackageDetailChange}  value={packageState.height} required/>
             </div>
             <div className="text-box">  
             
             </div>
             <div className="center-eve">
-            <Button variant="contained" style={{background : "#006AEE" , color : "#fff" , width : "82.5%", marginTop : 20}}>
+            <Button variant="contained" type="submit" style={{background : "#006AEE" , color : "#fff" , width : "82.5%", marginTop : 20}}>
               Submit
             </Button>  
             </div>

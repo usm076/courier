@@ -42,6 +42,7 @@ router.post('/', async function(req, res, next) {
     s_nationalId : req.body.s_nID, 
     s_address : req.body.s_address, 
     s_contact : req.body.s_contact,
+    status : "Pending",
     p_length :0 ,
     p_height : 0,
     p_width : 0,
