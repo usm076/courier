@@ -210,6 +210,9 @@ export default function Dashboard() {
 
   const handleStaffClose = () => setShowStaff(false);
   const handleStaffShow = () => setShowStaff(true);
+  const updateCount =()=>{
+    setCount(count+1);
+  }
 
   useEffect(()=>{
     const token = localStorage.getItem('auth-token');
@@ -237,21 +240,7 @@ export default function Dashboard() {
         message: 'Something went wrong 1. Try again later'
       });
       });
-        // const tokn = localStorage.getItem("auth-token");
-        // var config = {
-        // method: 'post',
-        // url: 'http://localhost:9000/dashboarddata',
-        // headers: { 
-        // 'x-auth-token': tokn
-        // }
-        // };
-        // axios(config)
-        // .then(function (response) {
-        // console.log(JSON.stringify(response.data));
-        // })
-        // .catch(function (error) {
-        // console.log(error);
-        // });
+       
 
     
     
@@ -351,7 +340,7 @@ export default function Dashboard() {
             {/* Recent Orders */}
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                <Orders  mydata={Data}/>
+                <Orders  mydata={Data} increment={updateCount}/>
               </Paper>
             </Grid>
           </Grid>

@@ -103,6 +103,9 @@ export default function Orders(props) {
     axios.post('http://localhost:9000/api/deletepackage', {id : pack_id}, {headers : {
       'x-auth-token' : authToken
     }}).then((response)=>{
+      props.increment();
+
+
       // Trigger successful flag and reload the table data
 
     }).catch((error)=>{
