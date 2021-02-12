@@ -6,9 +6,11 @@ const userSchema = new Schema
     name : String,
     email : String, 
     pass : String, 
-    verified : Boolean,
-    hasaddr : Boolean,
-}, { strict: false });
+    role : Number,
+    createdon : Date
+
+    
+}, { strict: true });
 
 
 //mongoose.connect('mongodb://localhost:27017/wallet', {useNewUrlParser: true, useUnifiedTopology: true});

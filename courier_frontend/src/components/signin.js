@@ -1,6 +1,38 @@
-import React from 'react'
+import React, {useState} from 'react'
+import axios from 'axios';
 
 export default function Signin() {
+
+  const [state, setState] = useState({
+		
+		email: '',
+		pass: ''
+		
+    });
+
+    const [result, setResult] = useState(null);
+
+    const handleSubmit = event =>{
+      event.preventDefault();
+      axios.post('http://localhost:9000/api/login', {...state}).then((response)=>{
+        console.log(response);
+      localStorage.setItem('auth-token', response.data.token);
+      window.location.href = '/';
+      }).catch((error)=>{
+        console.log(error);
+      })
+
+    }
+
+
+  const onInputChange = event => {
+    const { name, value } = event.target;
+  
+    setState({
+      ...state,
+      [name]: value
+    });
+    };
     return (
         <div class="d-lg-flex half p-3">
     
@@ -14,15 +46,15 @@ export default function Signin() {
                   <h3>Sign In</h3>
                   <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p>
                 </div>
-                <form action="#" method="post">
+                <form onSubmit={handleSubmit}>
                   <div class="form-group first">
-                    <label for="username">username</label>
-                    <input type="text" class="form-control" id="username"/>
+                    <label for="username">Email</label>
+                    <input type="text" class="form-control" name="email" onChange={onInputChange}  value={state.email} required/>
     
                   </div>
                   <div class="form-group last mb-3">
                     <label for="password">password</label>
-                    <input type="password" class="form-control" id="password"/>
+                    <input type="password" class="form-control" id="password" name="pass" onChange={onInputChange}  value={state.pass} required/>
                     
                   </div>
                   

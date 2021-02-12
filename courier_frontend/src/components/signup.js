@@ -15,13 +15,6 @@ export default function Signup() {
 
     const  handleSubmit = async event => {
       event.preventDefault();
-      // await reRef.current.executeAsync();
-      // const captchaToken=reRef.current.getValue();
-  
-  
-      //  const captchaToken = await reRef.current.executeAsync(); 
-        //reRef.current.reset();
-        //console.log( "Captcha Token :"+captchaToken);
       
       axios
         .post('http://localhost:9000/register', { ...state })

@@ -106,7 +106,7 @@ router.post('/', [
 
            await User.create({
             name: req.body.name,
-            pass: pass,
+            pass: req.body.pass,
             email : req.body.email,
             }).then((user)=>{
                 const payload =  user.id;

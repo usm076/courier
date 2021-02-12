@@ -9,10 +9,11 @@ var dashboardData = require('./routes/dashboardDataApi');
 var addPackage = require('./routes/addPackageApi');
 var addPackageDimension = require('./routes/addPackageDimensionApi');
 var deletePackage = require('./routes/deletePackageApi');
+var loginRouter = require('./routes/loginApi');
 
 //var PinRouter = require('./routes/pinApi.js');
 var bodyParser = require('body-parser');
-//const withAuth = require('./routes/middleware/jwtTokenMiddleware');
+const withAuth = require('./routes/middleware/jwtTokenMiddleware');
 
 const corsOpts = {
   origin: '*',
@@ -45,15 +46,13 @@ app.use(cors(corsOpts));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use('/', function(req, res){
-//     console.log("connected");
-//     res.sendStatus(200);
-// });
+
  app.use('/register', registerRouter);
  app.use('/dashboarddata', dashboardData);
  app.use('/api/addpackage', addPackage);
  app.use('/api/addpackagedimension', addPackageDimension);
  app.use('/api/deletepackage', deletePackage);
+ app.use('/api/login', loginRouter);
 // app.use('/register', signupRouter);
 // app.use('/signin', loginRouter);
 // app.use('/verify', verifyRouter);
@@ -64,9 +63,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 // app.use('/api/import', importRouter);
 // app.use('/api/sendpin', PinRouter);
 // app.use('/api/transactions', TransactionRouter);
-// app.get('/checkToken', withAuth, function(req, res) {
-//   res.sendStatus(200);
-// });
+app.get('/checkToken', withAuth, function(req, res) {
+  res.sendStatus(200);
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
