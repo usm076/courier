@@ -431,3 +431,13 @@ h2 {
   margin-left:-5px;
   cursor:pointer;
 }
+
+.opacityzero{
+  opacity: 0;
+}
+
+
+
+.opacityone{
+  opacity: 1;
+}

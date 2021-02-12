@@ -8,7 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Title from './Title';
 import {Modal} from 'react-bootstrap'
-
+import { Alert, AlertTitle } from '@material-ui/lab';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -37,9 +37,6 @@ const rows = [
  // }
 ];
 
-function preventDefault(event) {
-  event.preventDefault();
-}
 
 const useStyles = makeStyles((theme) => ({
   seeMore: {
@@ -71,6 +68,17 @@ export default function Orders(props) {
   const handlePackageClose = () => setShowPackage(false);
   const handlePackageShow = () => setShowPackage(true);
 
+  const [show, setShow] = useState(false);
+
+  const [myalert, setmyalert] = useState("opacityzero");
+  
+    function preventDefault(event) {
+      event.preventDefault();
+      myalert === "opacityzero" ? setmyalert("opacityone") : setmyalert("opacityzero")
+    }
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  
   const onPackageDetailChange= event =>{
     const { name, value } = event.target;
       
@@ -116,6 +124,11 @@ export default function Orders(props) {
 
   return (
     <React.Fragment>
+      <Alert severity="success" className={myalert} style={{position: 'absolute' , top: 30 , zIndex : 2500 , background : 'lightgreen' , left: '37%' , width : '30vw' , transition: 'opacity 1s ease-out'}}>
+        <AlertTitle>Success</AlertTitle>
+        This is a success alert — <strong>check it out!</strong>
+      </Alert>
+
        <Typography component="p" className="emp-tag" variant="p">
              Latest Shipments
        </Typography>
@@ -179,7 +192,7 @@ export default function Orders(props) {
         variant="contained"
         color="info"
         size="small"
-        
+        onClick = {handleShow}
         className={classes.button}
         startIcon={<EditIcon />}
       >
@@ -250,6 +263,51 @@ export default function Orders(props) {
             </div>
             </form>
         </Modal.Body>
+
+
+
+        
+      <Modal show={show} onHide={handleClose} style={{marginTop: 50}}>
+        <Modal.Header closeButton>
+         <Typography component="p" className="emp-tag" variant="p">
+             EDIT COURIER
+         </Typography>
+        </Modal.Header>
+        <Modal.Body>
+            <form >
+              <Title>RECIEVER</Title>    
+            
+            <div className="text-box">  
+            <TextField id="standard-basic" label="Name" name = "r_name"  required />
+            <TextField id="standard-basic" label="NID" name = "r_nID"  required />
+            </div>
+            <div className="text-box">  
+            <TextField id="standard-basic" label="Address" name = "r_address" required />
+            <TextField id="standard-basic" label="Contact No" name = "r_contact" required />
+            </div>
+
+            <Title>SENDER</Title>    
+            
+            <div className="text-box">  
+            <TextField id="standard-basic" label="Name" name = "s_name" required/>
+            <TextField id="standard-basic" label="CNIC" name = "s_nID" required/>
+            </div>
+            <div className="text-box">  
+            <TextField id="standard-basic" label="Address" name = "s_address" required />
+            <TextField id="standard-basic" label="Contact No" name = "s_contact" required/>
+            </div>
+
+            <div className="center-eve">
+            <Button type="submit" variant="contained" style={{background : "#006AEE" , color : "#fff" , width : "82.5%", marginTop : 20}}>
+              Submit
+            </Button>  
+            </div>
+            </form>
+        </Modal.Body>
+        
+      </Modal>
+
+
         
       </Modal>
 
