@@ -20,6 +20,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Select from '@material-ui/core/Select';
 import axios from 'axios';
+import withAuth from '../../LoggedIn';
 
 
 // Generate Order Data
@@ -73,8 +74,10 @@ export default function Orders(props) {
   const [myalert, setmyalert] = useState("opacityzero");
   
     function preventDefault(event) {
-      event.preventDefault();
-      myalert === "opacityzero" ? setmyalert("opacityone") : setmyalert("opacityzero")
+      //event.preventDefault();
+      setmyalert("opacityone")
+      setTimeout(() => {  setmyalert("opacityzero"); }, 3000);
+     // myalert === "opacityzero" ? setmyalert("opacityone") : setmyalert("opacityzero")
     }
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -98,6 +101,7 @@ export default function Orders(props) {
       'x-auth-token' : authToken
     }}).then((response)=>{
       console.log(response);
+      preventDefault();
 
     }).catch((error)=>{
       console.log(error);
@@ -111,6 +115,7 @@ export default function Orders(props) {
     axios.post('http://localhost:9000/api/deletepackage', {id : pack_id}, {headers : {
       'x-auth-token' : authToken
     }}).then((response)=>{
+      preventDefault();
       props.increment();
 
 
@@ -126,7 +131,7 @@ export default function Orders(props) {
     <React.Fragment>
       <Alert severity="success" className={myalert} style={{position: 'absolute' , top: 30 , zIndex : 2500 , background : 'lightgreen' , left: '37%' , width : '30vw' , transition: 'opacity 1s ease-out'}}>
         <AlertTitle>Success</AlertTitle>
-        This is a success alert — <strong>check it out!</strong>
+        <strong>Action successfull</strong>
       </Alert>
 
        <Typography component="p" className="emp-tag" variant="p">
