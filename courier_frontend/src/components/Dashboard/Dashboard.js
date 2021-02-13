@@ -7,6 +7,7 @@ import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import { Alert, AlertTitle } from '@material-ui/lab';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import {Modal} from 'react-bootstrap'
@@ -134,6 +135,8 @@ export default function Dashboard() {
   var packages_data=[];
   const axios = require('axios');
   const [count, setCount] = useState(0);
+  const [myalert, setmyalert] = useState("opacityzero");
+  const [alertText, setalertText] = useState("Action success");
  
 
   const [state, setState] = useState({
@@ -201,6 +204,12 @@ export default function Dashboard() {
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const [show, setShow] = useState(false);
+  const [Staffstate, setStaffState] = useState({
+    staffName : '',
+    staffEmail : '',
+    staffPass : '',
+    staffContact : ''
+  })
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -210,6 +219,7 @@ export default function Dashboard() {
 
   const handleStaffClose = () => setShowStaff(false);
   const handleStaffShow = () => setShowStaff(true);
+  
   const updateCount =()=>{
     setCount(count+1);
   }
@@ -239,16 +249,53 @@ export default function Dashboard() {
         success: false,
         message: 'Something went wrong 1. Try again later'
       });
-      });
-       
-
-    
-    
-    
+      });    
   }, [count])
+  // handleStaffSubmit onStaffInputChange
+  const handleStaffSubmit = event =>{
+    event.preventDefault();
+
+    var authToken = localStorage.getItem('auth-token');
+    axios.post('http://localhost:9000/api/addstaff', {...Staffstate}, {headers : {
+      'x-auth-token' : authToken
+    }}).then((response)=>{
+      console.log(response);
+      preventDefault(0, response.data.msg);
+
+    })
+    .catch((error)=>{
+      console.log(error)
+
+    })
+
+  }
+
+
+  const onStaffInputChange = event =>{
+    const { name, value } = event.target;
+      
+        setStaffState({
+          ...Staffstate,
+          [name]: value
+        });
+  }
+  function preventDefault(event, msg) {
+    //event.preventDefault();
+    setalertText(msg);
+    setmyalert("opacityone")
+    setTimeout(() => {  setmyalert("opacityzero"); }, 3000);
+   // myalert === "opacityzero" ? setmyalert("opacityone") : setmyalert("opacityzero")
+  }
+
+
+
 
   return (
     <div className={classes.root}>
+      <Alert severity="success" className={myalert} style={{position: 'absolute' , top: 30 , zIndex : 2500 , background : 'lightgreen' , left: '37%' , width : '30vw' , transition: 'opacity 1s ease-out'}}>
+        <AlertTitle>Success</AlertTitle>
+        <strong>{alertText}</strong>
+      </Alert>
       <CssBaseline />
       <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
         <Toolbar className={classes.toolbar}>
@@ -340,7 +387,7 @@ export default function Dashboard() {
             {/* Recent Orders */}
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                <Orders  mydata={Data} increment={updateCount}/>
+                <Orders  mydata={Data} increment={updateCount} showAlert={preventDefault}/>
               </Paper>
             </Grid>
           </Grid>
@@ -403,17 +450,17 @@ export default function Dashboard() {
          </Typography>
         </Modal.Header>
         <Modal.Body>
-            <form>
+            <form onSubmit={handleStaffSubmit}>
             <div className="text-box">  
-            <TextField id="standard-basic" label="Name" />
-            <TextField id="standard-basic" label="email" />
+            <TextField id="standard-basic" label="Name" name = "staffName" onChange={onStaffInputChange}  value={Staffstate.staffName} required/>
+            <TextField id="standard-basic" label="email" name = "staffEmail" onChange={onStaffInputChange}  value={Staffstate.staffEmail} required />
             </div>
             <div className="text-box">  
-            <TextField id="standard-basic" label="City" />
-            <TextField id="standard-basic" label="Contact No" />
+            <TextField id="standard-basic" label="Password" name = "staffPass" onChange={onStaffInputChange}  value={Staffstate.staffPass} required  />
+            <TextField id="standard-basic" label="Contact No" name = "staffContact" onChange={onStaffInputChange}  value={Staffstate.staffContact} required />
             </div>
             <div className="center-eve">
-            <Button variant="contained" style={{background : "#006AEE" , color : "#fff" , width : "82.5%", marginTop : 20}}>
+            <Button variant="contained" type="submit" style={{background : "#006AEE" , color : "#fff" , width : "82.5%", marginTop : 20}}>
               Submit
             </Button>  
             </div>

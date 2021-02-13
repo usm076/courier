@@ -71,14 +71,16 @@ export default function Orders(props) {
 
   const [show, setShow] = useState(false);
 
-  const [myalert, setmyalert] = useState("opacityzero");
+  // const [myalert, setmyalert] = useState("opacityzero");
+  // const [alertText, setalertText] = useState("Action success");
   
-    function preventDefault(event) {
-      //event.preventDefault();
-      setmyalert("opacityone")
-      setTimeout(() => {  setmyalert("opacityzero"); }, 3000);
-     // myalert === "opacityzero" ? setmyalert("opacityone") : setmyalert("opacityzero")
-    }
+    // function preventDefault(event, msg) {
+    //   //event.preventDefault();
+    //   setalertText(msg);
+    //   setmyalert("opacityone")
+    //   setTimeout(() => {  setmyalert("opacityzero"); }, 3000);
+    //  // myalert === "opacityzero" ? setmyalert("opacityone") : setmyalert("opacityzero")
+    // }
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   
@@ -100,8 +102,10 @@ export default function Orders(props) {
     axios.post('http://localhost:9000/api/addpackagedimension', {...packageState, package_id : pack_id}, {headers:{
       'x-auth-token' : authToken
     }}).then((response)=>{
-      console.log(response);
-      preventDefault();
+      console.log(response.data.msg);
+      // preventDefault(0, response.data.msg);
+      props.showAlert(0, response.data.msg);
+      handlePackageClose();
 
     }).catch((error)=>{
       console.log(error);
@@ -115,7 +119,10 @@ export default function Orders(props) {
     axios.post('http://localhost:9000/api/deletepackage', {id : pack_id}, {headers : {
       'x-auth-token' : authToken
     }}).then((response)=>{
-      preventDefault();
+
+      // preventDefault(0, response.data.msg);
+      props.showAlert(0, response.data.msg);
+      
       props.increment();
 
 
@@ -129,10 +136,10 @@ export default function Orders(props) {
 
   return (
     <React.Fragment>
-      <Alert severity="success" className={myalert} style={{position: 'absolute' , top: 30 , zIndex : 2500 , background : 'lightgreen' , left: '37%' , width : '30vw' , transition: 'opacity 1s ease-out'}}>
+      {/* <Alert severity="success" className={myalert} style={{position: 'absolute' , top: 30 , zIndex : 2500 , background : 'lightgreen' , left: '37%' , width : '30vw' , transition: 'opacity 1s ease-out'}}>
         <AlertTitle>Success</AlertTitle>
-        <strong>Action successfull</strong>
-      </Alert>
+        <strong>{alertText}</strong>
+      </Alert> */}
 
        <Typography component="p" className="emp-tag" variant="p">
              Latest Shipments
@@ -234,7 +241,7 @@ export default function Orders(props) {
         </TableBody>
       </Table>
       <div className={classes.seeMore}>
-        <Link color="primary" href="#" onClick={preventDefault}>
+        <Link color="primary" href="#" >
           See more orders
         </Link>
       </div>

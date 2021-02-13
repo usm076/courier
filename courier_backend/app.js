@@ -10,6 +10,7 @@ var addPackage = require('./routes/addPackageApi');
 var addPackageDimension = require('./routes/addPackageDimensionApi');
 var deletePackage = require('./routes/deletePackageApi');
 var loginRouter = require('./routes/loginApi');
+var addStaffRouter = require('./routes/addStaffApi');
 
 //var PinRouter = require('./routes/pinApi.js');
 var bodyParser = require('body-parser');
@@ -53,6 +54,7 @@ app.use(express.static(path.join(__dirname, 'public')));
  app.use('/api/addpackagedimension', addPackageDimension);
  app.use('/api/deletepackage', deletePackage);
  app.use('/api/login', loginRouter);
+ app.use('/api/addstaff', addStaffRouter);
 // app.use('/register', signupRouter);
 // app.use('/signin', loginRouter);
 // app.use('/verify', verifyRouter);

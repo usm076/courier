@@ -10,6 +10,7 @@ var User = require('./schemas/mongo_users');
 //var EmailVerification = require('./schemas/mongo_package');
 dotenv.config();
 const jwt = require('jsonwebtoken');
+const withAuth = require('./middleware/jwtTokenMiddleware');
 
 const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/courier', {useNewUrlParser: true, useUnifiedTopology: true});
@@ -34,29 +35,13 @@ function passEncryptr(pass)
 }
 
 var userid=0;
-// async function validateHuman(token)
-// {
-//   var secret = '6LecPgoaAAAAALxrWJCTVJV-ZMLqf7UfTiV_iQDt';
-//   const url = 'https://www.google.com/recaptcha/api/siteverify?secret='+secret+'&response='+token;
-//   const response = await fetch(url,
-//   {
-//     method : "POST"
-//   }
-//   );
-//   const data= await response.json();
-//   console.log(data);
-//   return data.success;
-//   // console.log(url);
-//   // return false;
-// } 
 
-/* GET home page. */
-router.post('/', [
-  body('name')
+router.post('/',withAuth,  [
+  body('staffName')
   .not()
   .isEmpty()
   .withMessage('Name is required'),
-  body('email')
+  body('staffEmail')
   .not()
   .isEmpty()
   .withMessage('Email is required')
@@ -64,7 +49,7 @@ router.post('/', [
   .withMessage('Invalid Email')
   .custom((value, {req}) => {
     return new Promise((resolve, reject) => {
-      User.findOne({email:req.body.email}, function(err, user){
+      User.findOne({email:req.body.staffEmail}, function(err, user){
         if(err) {
           reject(new Error('Server Error'))
         }
@@ -76,10 +61,10 @@ router.post('/', [
     });
   }),
   // Check Password
-  body('pass')
+  body('staffPass')
   .not()
   .isEmpty(),
-  body('pass').isLength({ min: 8 })
+  body('staffPass').isLength({ min: 8 })
   .withMessage('Password must be of 8 digits')
   
   
@@ -92,8 +77,14 @@ router.post('/', [
   }
   
   console.log(req.body)
-  const pass = passEncryptr(req.body.pass);
-  var pin = Math.floor(Math.random() * (99999 - 10000) ) + 10000;
+ 
+
+  User.findById({_id : req.jwtId}, async function(error, user){
+      if(user){
+    if(user.role == 0){
+
+   
+
 
 
   //Email Sending
@@ -105,47 +96,45 @@ router.post('/', [
             dt.setHours( dt.getHours() + 2 );
 
            await User.create({
-            name: req.body.name,
-            pass: req.body.pass,
-            email : req.body.email,
-            role : 0
+            name: req.body.staffName,
+            pass: req.body.staffPass,
+            email : req.body.staffEmail,
+            pass : req.body.staffPass,
+            role : 1
             }).then((user)=>{
-                const payload =  user.id;
-                jwt.sign(payload, "usman123", {
-                // expiresIn : 3600
-
-                },
-                (error, token) => {
-                if(error) throw error;
                 res.json({
-                token, 
-                status : 200,
+                    msg : "Staff added successfully",
+                    status : 200
                 })
-                }
-                )
             })
        
      
   } catch (error) {
     console.log('Sign up failed 1');
-        success =1;
+        //success =1;
   }
+}
+else
+{
+    res.json({
+        msg : "Only admin can add staff",
+        status : 200
+    })
+}
+      }
+      else
+      {
+          console.log(error);
+          res.sendStatus(401);
+      }
 
+})
   
 //res.json({email : 0, id : user._id})
   
   
   })
-  function setUserid(id)
-  {
-    console.log("in setid function")
-    userid = id;
-  }
-  function getUserid()
-  {
-    console.log("in getid function")
-    return userid;
-  }
+  
 
 
 module.exports = router;

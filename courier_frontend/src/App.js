@@ -15,7 +15,7 @@ function App() {
     
     <Router>
       <Fragment>
-        <Route exact path="/" component={(Dashboard)} />
+        <Route exact path="/" component={withAuth(Dashboard)} />
         <Switch>
           <Route exact path="/login" component={LoggedIn(Signin)} />
           <Route exact path="/register" component={LoggedIn(Signup)} />
