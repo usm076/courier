@@ -69,7 +69,7 @@ export default function Orders(props) {
   const handlePackageClose = () => setShowPackage(false);
   const handlePackageShow = () => setShowPackage(true);
 
-  const [show, setShow] = useState(false);
+  const [showEdit, setShowEdit] = useState(false);
 
   // const [myalert, setmyalert] = useState("opacityzero");
   // const [alertText, setalertText] = useState("Action success");
@@ -81,8 +81,8 @@ export default function Orders(props) {
     //   setTimeout(() => {  setmyalert("opacityzero"); }, 3000);
     //  // myalert === "opacityzero" ? setmyalert("opacityone") : setmyalert("opacityzero")
     // }
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleEditClose = () => setShowEdit(false);
+  const handleEditShow = () => setShowEdit(true);
   
   const onPackageDetailChange= event =>{
     const { name, value } = event.target;
@@ -204,7 +204,7 @@ export default function Orders(props) {
         variant="contained"
         color="info"
         size="small"
-        onClick = {handleShow}
+        onClick = {handleEditShow}
         className={classes.button}
         startIcon={<EditIcon />}
       >
@@ -275,11 +275,11 @@ export default function Orders(props) {
             </div>
             </form>
         </Modal.Body>
+      </Modal>
 
 
 
-        
-      <Modal show={show} onHide={handleClose} style={{marginTop: 50}}>
+      <Modal show={showEdit} onHide={handleEditClose} style={{marginTop: 50}}>
         <Modal.Header closeButton>
          <Typography component="p" className="emp-tag" variant="p">
              EDIT COURIER
@@ -316,10 +316,6 @@ export default function Orders(props) {
             </div>
             </form>
         </Modal.Body>
-        
-      </Modal>
-
-
         
       </Modal>
 
