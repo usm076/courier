@@ -11,6 +11,8 @@ var addPackageDimension = require('./routes/addPackageDimensionApi');
 var deletePackage = require('./routes/deletePackageApi');
 var loginRouter = require('./routes/loginApi');
 var addStaffRouter = require('./routes/addStaffApi');
+var getPackageDataRouter = require('./routes/getPackageDataApi');
+var editPackageRouter = require('./routes/editPackageApi');
 
 //var PinRouter = require('./routes/pinApi.js');
 var bodyParser = require('body-parser');
@@ -55,6 +57,15 @@ app.use(express.static(path.join(__dirname, 'public')));
  app.use('/api/deletepackage', deletePackage);
  app.use('/api/login', loginRouter);
  app.use('/api/addstaff', addStaffRouter);
+ app.use('/api/getpackagedata', getPackageDataRouter);
+ app.use('/api/editpackagedata', editPackageRouter);
+ //Login
+
+
+ //Signup
+
+
+ // 
 // app.use('/register', signupRouter);
 // app.use('/signin', loginRouter);
 // app.use('/verify', verifyRouter);

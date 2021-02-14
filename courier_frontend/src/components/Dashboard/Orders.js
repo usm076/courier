@@ -51,6 +51,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Orders(props) {
+  const [edit, setEdit] = useState({
+    r_n : '',
+    r_addr : '',
+    r_c : '',
+    r_nic  :'',
+    s_n : '',
+    s_addr : '',
+    s_c : '',
+    s_nic  :''
+
+  })
   var [currentId, setCurrentId] = useState(null);
   const classes = useStyles();
   const [age, setAge] = React.useState('');
@@ -63,6 +74,7 @@ export default function Orders(props) {
   const handleChange = (event) => {
     setAge(event.target.value);
   };
+  var pack_edit_id=0;
 
   const [showPackage, setShowPackage] = useState(false);
 
@@ -71,24 +83,72 @@ export default function Orders(props) {
 
   const [showEdit, setShowEdit] = useState(false);
 
-  // const [myalert, setmyalert] = useState("opacityzero");
-  // const [alertText, setalertText] = useState("Action success");
-  
-    // function preventDefault(event, msg) {
-    //   //event.preventDefault();
-    //   setalertText(msg);
-    //   setmyalert("opacityone")
-    //   setTimeout(() => {  setmyalert("opacityzero"); }, 3000);
-    //  // myalert === "opacityzero" ? setmyalert("opacityone") : setmyalert("opacityzero")
-    // }
   const handleEditClose = () => setShowEdit(false);
-  const handleEditShow = () => setShowEdit(true);
+  const handleEditShow = () => {
+   // alert(id);
+    setShowEdit(true);
+    
+  }
+
+
+  const editData = id => {
+    pack_edit_id = id;
+    var authToken = localStorage.getItem('auth-token');
+    axios.post('http://localhost:9000/api/getpackagedata', {package_id: id }, {headers : {
+      'x-auth-token' : authToken
+    }}).then((response)=>{
+      console.log(response);
+      setEdit({
+            r_n : response.data.package.r_name,
+            r_addr : response.data.package.r_address,
+            r_c : response.data.package.r_contact,
+            r_nic  :response.data.package.r_nationalId,
+            s_n : response.data.package.s_name,
+            s_addr : response.data.package.s_address,
+            s_c : response.data.package.s_contact,
+            s_nic  :response.data.package.s_nationalId
+        
+      })
+
+
+    }).catch((error)=>{
+      console.log(error);
+    })
+    //console.log(id)
+  }
   
   const onPackageDetailChange= event =>{
     const { name, value } = event.target;
       
     setPackageVariables({
           ...packageState,
+          [name]: value
+        });
+
+  }
+  const onpEditChange = event =>{
+    event.preventDefault();
+    var pack_id= pack_edit_id;
+    const authToken = localStorage.getItem('auth-token');
+    axios.post('http://localhost:9000/api/editpackagedata', {...edit, package_id : pack_id}, {headers : {
+      'x-auth-token' : authToken
+    }}).then((response) =>{
+      handleEditClose();
+      console.log(0,response.data.msg)
+      props.showAlert(0, response.data.msg);
+      props.increment();
+
+
+
+    }).catch((error)=>{
+
+    })
+  }
+  const oneditFormChange= event =>{
+    const { name, value } = event.target;
+      
+    setEdit({
+          ...edit,
           [name]: value
         });
 
@@ -204,7 +264,9 @@ export default function Orders(props) {
         variant="contained"
         color="info"
         size="small"
-        onClick = {handleEditShow}
+        onClick = {()=>{handleEditShow();
+        editData(row._id);
+        }}
         className={classes.button}
         startIcon={<EditIcon />}
       >
@@ -286,27 +348,27 @@ export default function Orders(props) {
          </Typography>
         </Modal.Header>
         <Modal.Body>
-            <form >
+            <form onSubmit={onpEditChange} >
               <Title>RECIEVER</Title>    
             
             <div className="text-box">  
-            <TextField id="standard-basic" label="Name" name = "r_name"  required />
-            <TextField id="standard-basic" label="NID" name = "r_nID"  required />
+            <TextField id="standard-basic" label="Name" name = "r_n" onChange={oneditFormChange}  value={edit.r_n}  required />
+            <TextField id="standard-basic" label="NID" name = "r_nic" onChange={oneditFormChange}  value={edit.r_nic}  required />
             </div>
             <div className="text-box">  
-            <TextField id="standard-basic" label="Address" name = "r_address" required />
-            <TextField id="standard-basic" label="Contact No" name = "r_contact" required />
+            <TextField id="standard-basic" label="Address" name = "r_addr" onChange={oneditFormChange}  value={edit.r_addr}  required />
+            <TextField id="standard-basic" label="Contact No" name = "r_c" onChange={oneditFormChange}  value={edit.r_c}  required />
             </div>
 
             <Title>SENDER</Title>    
             
             <div className="text-box">  
-            <TextField id="standard-basic" label="Name" name = "s_name" required/>
-            <TextField id="standard-basic" label="CNIC" name = "s_nID" required/>
+            <TextField id="standard-basic" label="Name" name = "s_n" onChange={oneditFormChange}  value={edit.s_n}  required/>
+            <TextField id="standard-basic" label="CNIC" name = "s_nic" onChange={oneditFormChange}  value={edit.s_nic}  required/>
             </div>
             <div className="text-box">  
-            <TextField id="standard-basic" label="Address" name = "s_address" required />
-            <TextField id="standard-basic" label="Contact No" name = "s_contact" required/>
+            <TextField id="standard-basic" label="Address" name = "s_addr" onChange={oneditFormChange}  value={edit.s_addr}  required />
+            <TextField id="standard-basic" label="Contact No" name = "s_c" onChange={oneditFormChange}  value={edit.s_c}  required/>
             </div>
 
             <div className="center-eve">

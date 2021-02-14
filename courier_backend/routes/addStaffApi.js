@@ -19,7 +19,7 @@ mongoose.connect('mongodb://localhost:27017/courier', {useNewUrlParser: true, us
 // const EmailVerification = mongoose.model('email_verification', {user_id : String, email: String, pin : String, verified : Boolean, expiryAt : Date});
 
 
-var success = 1 ;
+var success = 1;
 
 
 
@@ -83,10 +83,6 @@ router.post('/',withAuth,  [
       if(user){
     if(user.role == 0){
 
-   
-
-
-
   //Email Sending
   try {
     
@@ -99,7 +95,6 @@ router.post('/',withAuth,  [
             name: req.body.staffName,
             pass: req.body.staffPass,
             email : req.body.staffEmail,
-            pass : req.body.staffPass,
             role : 1
             }).then((user)=>{
                 res.json({
