@@ -21,19 +21,23 @@ var success = 1 ;
 
 
 
-
+//
 
 
 
 var userid=0;
 
 /* GET home page. */
-router.post('/', async function(req, res, next) {
-
+router.post('/', withAuth, async function(req, res, next) {
+  package.findOne({}, {}, { sort: { 'createdOn' : -1 } }, function(err, latestPackage) {
+    console.log( latestPackage.packID );
+    var idd = parseInt(latestPackage.packID)+1;
+  
   
   console.log(req.body);
   date = new Date();
   package.create({
+    packID : idd,
     r_name : req.body.r_name,
     r_nationalId : req.body.r_nID,
     r_address : req.body.r_address, 
@@ -53,6 +57,8 @@ router.post('/', async function(req, res, next) {
       msg : "Added successfully"
     })
   })
+
+});
   //res.send(req.body);
   
   

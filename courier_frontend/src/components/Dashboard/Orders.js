@@ -59,7 +59,8 @@ export default function Orders(props) {
     s_n : '',
     s_addr : '',
     s_c : '',
-    s_nic  :''
+    s_nic  :'',
+    packagetoedit_id : 0
 
   })
   var [currentId, setCurrentId] = useState(null);
@@ -92,7 +93,8 @@ export default function Orders(props) {
 
 
   const editData = id => {
-    pack_edit_id = id;
+    
+    
     var authToken = localStorage.getItem('auth-token');
     axios.post('http://localhost:9000/api/getpackagedata', {package_id: id }, {headers : {
       'x-auth-token' : authToken
@@ -106,7 +108,8 @@ export default function Orders(props) {
             s_n : response.data.package.s_name,
             s_addr : response.data.package.s_address,
             s_c : response.data.package.s_contact,
-            s_nic  :response.data.package.s_nationalId
+            s_nic  :response.data.package.s_nationalId,
+            packagetoedit_id : id
         
       })
 
@@ -116,6 +119,7 @@ export default function Orders(props) {
     })
     //console.log(id)
   }
+  
   
   const onPackageDetailChange= event =>{
     const { name, value } = event.target;
@@ -128,9 +132,9 @@ export default function Orders(props) {
   }
   const onpEditChange = event =>{
     event.preventDefault();
-    var pack_id= pack_edit_id;
+    //var pack_id= getPackId();
     const authToken = localStorage.getItem('auth-token');
-    axios.post('http://localhost:9000/api/editpackagedata', {...edit, package_id : pack_id}, {headers : {
+    axios.post('http://localhost:9000/api/editpackagedata', {...edit  }, {headers : {
       'x-auth-token' : authToken
     }}).then((response) =>{
       handleEditClose();
@@ -141,6 +145,7 @@ export default function Orders(props) {
 
 
     }).catch((error)=>{
+      console.log(error);
 
     })
   }
@@ -212,7 +217,6 @@ export default function Orders(props) {
             <TableCell>Sender name</TableCell>
             <TableCell>Receiver name</TableCell>
             <TableCell>Receiver address</TableCell>
-            
             <TableCell>Receiver Contact</TableCell>
             <TableCell>Status</TableCell>
              <TableCell>Add Package</TableCell>
@@ -227,7 +231,7 @@ export default function Orders(props) {
         <TableBody>
           {props.mydata.map((row) => (
             <TableRow key={row._id}>
-              <TableCell>{row._id}</TableCell>
+              <TableCell>786-{row.packID}</TableCell>
               <TableCell>{row.s_name}</TableCell>
               <TableCell>{row.r_name}</TableCell>
               <TableCell>{row.r_address}</TableCell>
@@ -240,10 +244,10 @@ export default function Orders(props) {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={age}
+          value={row.status}
           onChange={handleChange}
         >
-          <MenuItem value={row.status}>{row.status}</MenuItem>
+          <MenuItem value={row.status} >{row.status}</MenuItem>
           
         </Select>
       </FormControl>

@@ -162,12 +162,11 @@ export default function Dashboard() {
         .post('http://localhost:9000/api/addpackage', { ...state }, {headers :{'x-auth-token': token}})
         .then(response => {
           console.log(response);
-          setResult({
-            success: true,
-            message: 'Courier booked'
-          });
+          
           setCount(count+1);
           handleClose();
+          preventDefault(0, response.data.msg);
+          setState('');
         })
         .catch(() => {
         setResult({
@@ -259,6 +258,7 @@ export default function Dashboard() {
     axios.post('http://localhost:9000/api/addstaff', {...Staffstate}, {headers : {
       'x-auth-token' : authToken
     }}).then((response)=>{
+
       console.log(response);
       preventDefault(0, response.data.msg);
 

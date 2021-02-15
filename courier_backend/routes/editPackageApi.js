@@ -31,8 +31,8 @@ var userid=0;
 router.post('/', withAuth, async function(req, res, next) {
 
   
-  console.log(req.body.package_id);
-  package.updateOne({_id: req.body.package_id},{
+  console.log(req.body.packagetoedit_id);
+  package.updateOne({_id: req.body.packagetoedit_id},{
     r_name : req.body.r_n,
     r_nationalId : req.body.r_nic,
     r_address : req.body.r_addr, 
