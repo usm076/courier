@@ -60,6 +60,7 @@ export default function Orders(props) {
     s_addr : '',
     s_c : '',
     s_nic  :'',
+    status : '',
     packagetoedit_id : 0
 
   })
@@ -109,6 +110,7 @@ export default function Orders(props) {
             s_addr : response.data.package.s_address,
             s_c : response.data.package.s_contact,
             s_nic  :response.data.package.s_nationalId,
+            status  : response.data.package.status,
             packagetoedit_id : id
         
       })
@@ -374,6 +376,10 @@ export default function Orders(props) {
             <TextField id="standard-basic" label="Address" name = "s_addr" onChange={oneditFormChange}  value={edit.s_addr}  required />
             <TextField id="standard-basic" label="Contact No" name = "s_c" onChange={oneditFormChange}  value={edit.s_c}  required/>
             </div>
+            <Select labelId="demo-simple-select-label" id="demo-simple-select" name="status" value={edit.status} onChange={oneditFormChange}>
+            <MenuItem value="Pending" >Pending</MenuItem>
+            <MenuItem value="Delivered" >Delivered</MenuItem>
+            </Select>
 
             <div className="center-eve">
             <Button type="submit" variant="contained" style={{background : "#006AEE" , color : "#fff" , width : "82.5%", marginTop : 20}}>

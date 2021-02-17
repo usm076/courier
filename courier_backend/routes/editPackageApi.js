@@ -40,7 +40,8 @@ router.post('/', withAuth, async function(req, res, next) {
     s_name : req.body.s_n,
     s_nationalId : req.body.s_nic, 
     s_address : req.body.s_addr, 
-    s_contact : req.body.s_c
+    s_contact : req.body.s_c,
+    status : req.body.status
      // p_height : req.body.height, p_width :  req.body.width, p_length :  req.body.length 
     }, function(error, package){
     if(package)
