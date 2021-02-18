@@ -32,8 +32,8 @@ router.post('/', async function(req, res, next) {
 
   
   console.log(req.body);
-  package.updateOne({_id: req.body.package_id},{p_height : req.body.height, p_width :  req.body.width, p_length :  req.body.length }, function(error, package){
-    if(package)
+  package.updateOne({_id: req.body.package_id},{p_height : req.body.height, p_width :  req.body.width, p_length :  req.body.length }, function(error, pack){
+    if(pack)
     {
         res.json({
             msg :"Added successfully",

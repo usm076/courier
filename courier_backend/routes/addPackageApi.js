@@ -31,7 +31,7 @@ var userid=0;
 router.post('/', withAuth, async function(req, res, next) {
   package.findOne({}, {}, { sort: { 'createdOn' : -1 } }, function(err, latestPackage) {
     console.log( latestPackage.packID );
-    var idd = parseInt(latestPackage.packID)+1;
+    var idd = latestPackage.packID+1;
   
   
   console.log(req.body);

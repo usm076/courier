@@ -209,6 +209,11 @@ export default function Dashboard() {
     staffPass : '',
     staffContact : ''
   })
+  const [stats, setStats] = useState({
+    tCount : 0,
+    pCount : 0,
+    dCount : 0
+  })
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -231,6 +236,12 @@ export default function Dashboard() {
       .then(response => {
        // console.log(response);
         console.log(response.data.packages);
+        setStats({
+          tCount : response.data.tCount,
+          pCount : response.data.pCount,
+          dCount : response.data.dCount
+        })
+
         
           packages_data = response.data.packages;
           localStorage.setItem("packages",packages_data);
@@ -381,7 +392,7 @@ export default function Dashboard() {
             {/* Recent Deposits */}
             <Grid item xs={12} md={12} lg={12}>
             
-                <Deposits />
+                <Deposits mydata={stats}/>
               
             </Grid>
             {/* Recent Orders */}

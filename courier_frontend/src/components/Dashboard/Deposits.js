@@ -15,11 +15,11 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Deposits() {
+export default function Deposits(props) {
   const classes = useStyles();
   return (
     <React.Fragment>
-       <Cards/>
+       <Cards mydata={props.mydata}/>
     </React.Fragment>
   );
 }

@@ -29,32 +29,34 @@ var userid=0;
 
 /* GET home page. */
 router.post('/', async function(req, res, next) {
+    console.log(req.body.track);//.status != null
+    var tra = req.body.track;
 
-  package.find({}, function(error, packages)
+  package.findOne({ packID : tra}, function(error, pack)
   {
-    if(error)
+    if(pack)
     {
-      console.log("This is error :" ,error);
+        console.log("This is package : ", pack);
+        res.json({
+            status : 200,
+            packStatus : pack.status
+        })
+    }
+    else if(error)
+    {
+        console.log("This is Error : ", error);
+        res.json({
+            status : 200,
+            packStatus : "Package not found. Try again soon !"
+        })
     }
     else
-    {
-      package.countDocuments({status : "Pending"}, function(err, pendingCount){
-        package.countDocuments({status : "Delivered"}, function(deliveredError, deliveredCount){
-          package.countDocuments({}, function(totalError, totalCount){
-            res.json({
-              pCount : pendingCount,
-              dCount : deliveredCount,
-              tCount : totalCount,
-              status : 200,
-               packages
-            })
-
-          })
+    {   
+        res.json({
+            status : 200,
+            packStatus : "Package not found. Try again soon !"
         })
-      })
 
-     
-      
     }
   })
   //res.send(req.jwtId);

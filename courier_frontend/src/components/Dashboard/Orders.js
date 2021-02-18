@@ -70,7 +70,8 @@ export default function Orders(props) {
   const [packageState, setPackageVariables] = useState({
     height : 0,
     length : 0,
-    width : 0 
+    width : 0 ,
+    package_id : 0
   });
 
   const handleChange = (event) => {
@@ -90,6 +91,14 @@ export default function Orders(props) {
    // alert(id);
     setShowEdit(true);
     
+  }
+
+  const callme = packID => {
+    setPackageVariables({
+      ...packageState,
+      package_id : packID
+    });
+    handlePackageShow();
   }
 
 
@@ -166,7 +175,7 @@ export default function Orders(props) {
     event.preventDefault();
     //alert(currentId);
     var authToken = localStorage.getItem('auth-token');
-    axios.post('http://localhost:9000/api/addpackagedimension', {...packageState, package_id : pack_id}, {headers:{
+    axios.post('http://localhost:9000/api/addpackagedimension', {...packageState}, {headers:{
       'x-auth-token' : authToken
     }}).then((response)=>{
       console.log(response.data.msg);
@@ -220,7 +229,9 @@ export default function Orders(props) {
             <TableCell>Receiver name</TableCell>
             <TableCell>Receiver address</TableCell>
             <TableCell>Receiver Contact</TableCell>
+            <TableCell>Package Dimension</TableCell>
             <TableCell>Status</TableCell>
+            
              <TableCell>Add Package</TableCell>
 
             
@@ -238,7 +249,9 @@ export default function Orders(props) {
               <TableCell>{row.r_name}</TableCell>
               <TableCell>{row.r_address}</TableCell>
               <TableCell>{row.r_contact}</TableCell>
+              <TableCell>{parseFloat(row.p_length.$numberDecimal.toString())}X{parseFloat(row.p_length.$numberDecimal.toString())}X{parseFloat(row.p_length.$numberDecimal.toString())}</TableCell>
               {/* <TableCell>{row.s_contact}</TableCell> */}
+              {/* <TableCell>{parseInt(row.p_length)}X{parseInt(row.p_height)}X{parseInt(row.p_width)}</TableCell> */}
               
               {/* <TableCell >{row.amount}</TableCell> */}
               <TableCell>    <FormControl className={classes.formControl}>
@@ -260,7 +273,7 @@ export default function Orders(props) {
         color="primary"
         size="small"
         className={classes.button}
-        onClick = {()=>{setCurrentId(row._id); handlePackageShow(row._id); }}
+        onClick = {()=>{setCurrentId(row._id); callme(row._id); }}
       >
         Add
       </Button>

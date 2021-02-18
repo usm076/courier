@@ -13,6 +13,7 @@ var loginRouter = require('./routes/loginApi');
 var addStaffRouter = require('./routes/addStaffApi');
 var getPackageDataRouter = require('./routes/getPackageDataApi');
 var editPackageRouter = require('./routes/editPackageApi');
+var trackRouter = require('./routes/trackApi');
 
 //var PinRouter = require('./routes/pinApi.js');
 var bodyParser = require('body-parser');
@@ -59,6 +60,7 @@ app.use(express.static(path.join(__dirname, 'public')));
  app.use('/api/addstaff', addStaffRouter);
  app.use('/api/getpackagedata', getPackageDataRouter);
  app.use('/api/editpackagedata', editPackageRouter);
+ app.use('/api/track', trackRouter);
  //Login
 
 

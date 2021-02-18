@@ -8,12 +8,13 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import DirectionsIcon from '@material-ui/icons/Directions';
 import {Modal} from 'react-bootstrap'
-
+import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import AppBar from '@material-ui/core/AppBar';
 import clsx from 'clsx';
 import Typography from '@material-ui/core/Typography';
 import Toolbar from '@material-ui/core/Toolbar';
+import axios from 'axios';
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: '10px 12px',
@@ -52,9 +53,38 @@ const useStyles = makeStyles((theme) => ({
 export default function Search() {
   const classes = useStyles();
   const [show, setShow] = useState(false);
+  const [track, setTrack] = useState(0);
 
   const handleClose = () => setShow(false);
-  const handleShow = (e) => { e.preventDefault(); setShow(true) };
+  const handleShow = () => {  setShow(true) };
+
+  const [trackText, setTrackText] = useState("");
+
+
+  const onInputChange = event =>{
+    const { name, value } = event.target;
+      
+        setTrack(value);
+  }
+
+  const handleTrackingSubmit = event =>{
+    event.preventDefault();
+
+   // var authToken = localStorage.getItem('auth-token');
+    axios.post('http://localhost:9000/api/track', {track} ).then((response)=>{
+
+      console.log(response);
+      setTrackText(response.data.packStatus);
+      handleShow();
+      //preventDefault(0, response.data.msg);
+
+    })
+    .catch((error)=>{
+      console.log("This is error : ",error)
+
+    })
+
+  }
 
 
   return (
@@ -81,24 +111,30 @@ export default function Search() {
            
             
            </div>
-          
+           {/* component="form" */}
         </Toolbar>
       </AppBar>
-    <Paper component="form" className={classes.root}>
+      <form onSubmit={handleTrackingSubmit}>
+    <Paper   className={classes.root}>
+   
       <IconButton className={classes.iconButton} aria-label="menu">
         <MenuIcon />
       </IconButton>
+     
       <InputBase
         className={classes.input}
         placeholder="consignment no.."
         inputProps={{ 'aria-label': 'search consignment no..' }}
+        name = "track" onChange={onInputChange}  value={track} required
       />
  
       <Divider className={classes.divider} orientation="vertical" />
-      <IconButton type="submit" className={classes.iconButton} aria-label="search" onClick={handleShow}>
+      <Button type="submit" className={classes.iconButton} aria-label="search" >
         <SearchIcon />
-      </IconButton>
+      </Button>
+      
     </Paper>
+    </form>
     <Modal show={show} onHide={handleClose} style={{marginTop: 100}}>
         <Modal.Header closeButton>
          <Typography component="p" className="emp-tag" variant="p">
@@ -109,7 +145,7 @@ export default function Search() {
             <div className="center-eve">
 
             <Typography component="p" className="emp-tag text-dark p-5 mb-5" variant="p">
-             Your Courier Has Arrived !
+            Package Status : {trackText}
          </Typography>
             </div>
         </Modal.Body>
