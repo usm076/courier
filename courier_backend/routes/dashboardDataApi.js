@@ -28,7 +28,7 @@ var success = 1 ;
 var userid=0;
 
 /* GET home page. */
-router.post('/', async function(req, res, next) {
+router.post('/',withAuth, async function(req, res, next) {
 
   package.find({}, function(error, packages)
   {
@@ -41,13 +41,32 @@ router.post('/', async function(req, res, next) {
       package.countDocuments({status : "Pending"}, function(err, pendingCount){
         package.countDocuments({status : "Delivered"}, function(deliveredError, deliveredCount){
           package.countDocuments({}, function(totalError, totalCount){
-            res.json({
-              pCount : pendingCount,
-              dCount : deliveredCount,
-              tCount : totalCount,
-              status : 200,
-               packages
+            User.findById({_id : req.jwtId}, function(userError, userRole)
+            {
+              if(userRole.role == 0)
+              {
+                res.json({
+                  isAdmin : true,
+                  pCount : pendingCount,
+                  dCount : deliveredCount,
+                  tCount : totalCount,
+                  status : 200,
+                   packages
+                })
+              }
+              else
+              {
+                res.json({
+                  isAdmin : false,
+                  pCount : pendingCount,
+                  dCount : deliveredCount,
+                  tCount : totalCount,
+                  status : 200,
+                   packages
+                })
+              }
             })
+            
 
           })
         })

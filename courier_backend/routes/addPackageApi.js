@@ -30,7 +30,8 @@ var userid=0;
 /* GET home page. */
 router.post('/', withAuth, async function(req, res, next) {
   package.findOne({}, {}, { sort: { 'createdOn' : -1 } }, function(err, latestPackage) {
-    console.log( latestPackage.packID );
+    //console.log( latestPackage.packID );
+    if(latestPackage != null){
     var idd = latestPackage.packID+1;
   
   
@@ -50,6 +51,7 @@ router.post('/', withAuth, async function(req, res, next) {
     p_length :0 ,
     p_height : 0,
     p_width : 0,
+    p_actualWeight : req.body.p_weight,
     createdOn : new Date()
   }).then((pack)=>{
     res.json({
@@ -57,6 +59,34 @@ router.post('/', withAuth, async function(req, res, next) {
       msg : "Added successfully"
     })
   })
+}
+else
+{
+  date = new Date();
+  package.create({
+    packID : 1000001,
+    r_name : req.body.r_name,
+    r_nationalId : req.body.r_nID,
+    r_address : req.body.r_address, 
+    r_contact : req.body.r_contact,
+    s_name : req.body.s_name,
+    s_nationalId : req.body.s_nID, 
+    s_address : req.body.s_address, 
+    s_contact : req.body.s_contact,
+    status : "Pending",
+    p_length :0 ,
+    p_height : 0,
+    p_width : 0,
+    p_actualWeight : req.body.p_weight,
+    createdOn : new Date()
+  }).then((pack)=>{
+    // package.updateOne({_id : pack.id},{packID : })
+    res.json({
+      status : 200,
+      msg : "Added successfully"
+    })
+  })
+}
 
 });
   //res.send(req.body);

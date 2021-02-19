@@ -41,7 +41,8 @@ router.post('/', withAuth, async function(req, res, next) {
     s_nationalId : req.body.s_nic, 
     s_address : req.body.s_addr, 
     s_contact : req.body.s_c,
-    status : req.body.status
+    status : req.body.status,
+    p_actualWeight : req.body.p_weight
      // p_height : req.body.height, p_width :  req.body.width, p_length :  req.body.length 
     }, function(error, package){
     if(package)

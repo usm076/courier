@@ -147,7 +147,8 @@ export default function Dashboard() {
     s_name : '',
     s_nID : '',
     s_address : '',
-    s_contact : ''
+    s_contact : '',
+    p_weight : 0
 		
     });
 
@@ -209,6 +210,7 @@ export default function Dashboard() {
     staffPass : '',
     staffContact : ''
   })
+  const [isAdmin, setisAdmin] = useState(false);
   const [stats, setStats] = useState({
     tCount : 0,
     pCount : 0,
@@ -241,6 +243,10 @@ export default function Dashboard() {
           pCount : response.data.pCount,
           dCount : response.data.dCount
         })
+        if(response.data.isAdmin)
+        {
+          setisAdmin(true);
+        }
 
         
           packages_data = response.data.packages;
@@ -376,9 +382,12 @@ export default function Dashboard() {
         <Button variant="contained" style={{background : "#006AEE" , color : "#fff" , width : "82.5%", marginTop : 20}}>
             ADD SHIPMENT
         </Button>
+        {isAdmin?
         <Button variant="contained"  onClick={handleStaffShow} style={{background : "#006AEE" , color : "#fff" , width : "82.5%", marginTop : 20}}>
             ADD STAFF
         </Button>
+
+        : null}
         <Button variant="contained" onClick={handleShow} style={{background : "#006AEE" , color : "#fff" , width : "82.5%", marginTop : 20}}>
             BOOK COURIER
         </Button>
@@ -398,7 +407,7 @@ export default function Dashboard() {
             {/* Recent Orders */}
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                <Orders  mydata={Data} increment={updateCount} showAlert={preventDefault}/>
+                <Orders isAdmin= {isAdmin}  mydata={Data} increment={updateCount} showAlert={preventDefault}/>
               </Paper>
             </Grid>
           </Grid>
@@ -442,6 +451,13 @@ export default function Dashboard() {
             <TextField id="standard-basic" label="Address" name = "s_address" onChange={onInputChange}  value={state.s_address} required />
             <TextField id="standard-basic" label="Contact No" name = "s_contact" onChange={onInputChange}  value={state.s_contact} required/>
             </div>
+
+            <Title>Package</Title> 
+            <div className="text-box">  
+            <TextField id="standard-basic" label="Weight" name = "p_weight" onChange={onInputChange}  value={state.p_weight} required />
+            
+            </div>
+
 
             <div className="center-eve">
             <Button type="submit" variant="contained" style={{background : "#006AEE" , color : "#fff" , width : "82.5%", marginTop : 20}}>

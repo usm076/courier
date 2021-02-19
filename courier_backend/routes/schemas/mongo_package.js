@@ -16,6 +16,8 @@ const packageSchema = new Schema
     p_length : mongoose.Decimal128,
     p_height : mongoose.Decimal128,
     p_width : mongoose.Decimal128,
+    p_actualWeight : 0,
+    p_chargeableWeight : 0,
     createdOn : Date
 
 }, { strict: true });

@@ -120,6 +120,7 @@ export default function Orders(props) {
             s_c : response.data.package.s_contact,
             s_nic  :response.data.package.s_nationalId,
             status  : response.data.package.status,
+            p_weight : response.data.package.p_actualWeight,
             packagetoedit_id : id
         
       })
@@ -182,6 +183,7 @@ export default function Orders(props) {
       // preventDefault(0, response.data.msg);
       props.showAlert(0, response.data.msg);
       handlePackageClose();
+      props.increment();
 
     }).catch((error)=>{
       console.log(error);
@@ -229,6 +231,7 @@ export default function Orders(props) {
             <TableCell>Receiver name</TableCell>
             <TableCell>Receiver address</TableCell>
             <TableCell>Receiver Contact</TableCell>
+            <TableCell>Chargeable weight</TableCell>
             <TableCell>Package Dimension</TableCell>
             <TableCell>Status</TableCell>
             
@@ -237,7 +240,7 @@ export default function Orders(props) {
             
             
             <TableCell>Edit</TableCell> 
-            <TableCell >Delete</TableCell>
+            {props.isAdmin? <TableCell >Delete</TableCell> : null}
             <TableCell >Print</TableCell>
           </TableRow>
         </TableHead>
@@ -249,7 +252,8 @@ export default function Orders(props) {
               <TableCell>{row.r_name}</TableCell>
               <TableCell>{row.r_address}</TableCell>
               <TableCell>{row.r_contact}</TableCell>
-              <TableCell>{parseFloat(row.p_length.$numberDecimal.toString())}X{parseFloat(row.p_length.$numberDecimal.toString())}X{parseFloat(row.p_length.$numberDecimal.toString())}</TableCell>
+              <TableCell>{row.p_chargeableWeight}</TableCell>
+              <TableCell>{parseFloat(row.p_length.$numberDecimal.toString())} X {parseFloat(row.p_height.$numberDecimal.toString())} X {parseFloat(row.p_width.$numberDecimal.toString())}</TableCell>
               {/* <TableCell>{row.s_contact}</TableCell> */}
               {/* <TableCell>{parseInt(row.p_length)}X{parseInt(row.p_height)}X{parseInt(row.p_width)}</TableCell> */}
               
@@ -292,7 +296,7 @@ export default function Orders(props) {
         Edit
       </Button>
               </TableCell>
-              <TableCell >
+              {props.isAdmin? <TableCell >
               <Button
         variant="contained"
         color="secondary"
@@ -303,7 +307,7 @@ export default function Orders(props) {
       >
         Delete
       </Button >
-              </TableCell>
+              </TableCell>: null }
          
               <TableCell >
               <Button 
@@ -388,6 +392,11 @@ export default function Orders(props) {
             <div className="text-box">  
             <TextField id="standard-basic" label="Address" name = "s_addr" onChange={oneditFormChange}  value={edit.s_addr}  required />
             <TextField id="standard-basic" label="Contact No" name = "s_c" onChange={oneditFormChange}  value={edit.s_c}  required/>
+            </div>
+            <Title>Package Status</Title>
+            <div className="text-box">  
+            <TextField id="standard-basic" label="Weight" name = "p_weight" onChange={oneditFormChange}  value={edit.p_weight}  required />
+            {/* <TextField id="standard-basic" label="Contact No" name = "s_c" onChange={oneditFormChange}  value={edit.s_c}  required/> */}
             </div>
             <Select labelId="demo-simple-select-label" id="demo-simple-select" name="status" value={edit.status} onChange={oneditFormChange}>
             <MenuItem value="Pending" >Pending</MenuItem>
