@@ -13,8 +13,7 @@ const jwt = require('jsonwebtoken');
 const withAuth = require('./middleware/jwtTokenMiddleware');
 const fs = require("fs");
 const path = require("path");
-const puppeteer = require('puppeteer');
-const handlebars = require("handlebars");
+
 var pdf = require("pdf-creator-node");
 
 const mongoose = require('mongoose');
@@ -76,9 +75,7 @@ router.post('/', async function(req, res, next) {
     // var html = fs.readFileSync(path.join(process.cwd(),'/routes/pdftemplate.html'), 'utf8');
 
     //console.log(templateHtml);
-	var template = handlebars.compile(templateHtml);
-    // //console.log(template);
-	var html = template(data);
+	
     // // console.log(html);
 
 	
