@@ -18,6 +18,8 @@ const packageSchema = new Schema
     p_width : mongoose.Decimal128,
     p_actualWeight : 0,
     p_chargeableWeight : 0,
+    s_country : String,
+    r_country : String,
     createdOn : Date
 
 }, { strict: true });

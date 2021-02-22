@@ -14,6 +14,7 @@ var addStaffRouter = require('./routes/addStaffApi');
 var getPackageDataRouter = require('./routes/getPackageDataApi');
 var editPackageRouter = require('./routes/editPackageApi');
 var trackRouter = require('./routes/trackApi');
+var pdfRouter = require('./routes/pdfApi');
 
 //var PinRouter = require('./routes/pinApi.js');
 var bodyParser = require('body-parser');
@@ -61,6 +62,7 @@ app.use(express.static(path.join(__dirname, 'public')));
  app.use('/api/getpackagedata', getPackageDataRouter);
  app.use('/api/editpackagedata', editPackageRouter);
  app.use('/api/track', trackRouter);
+ app.use('/api/generatepdf', pdfRouter);
  //Login
 
 

@@ -23,6 +23,7 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems } from './listItems';
 import Deposits from './Deposits';
 import Orders from './Orders';
+import staff from './staff'
 
 import TextField from '@material-ui/core/TextField';
 import Title from './Title';
@@ -148,7 +149,9 @@ export default function Dashboard() {
     s_nID : '',
     s_address : '',
     s_contact : '',
-    p_weight : 0
+    p_weight : 0,
+    s_country : '',
+    r_country : '',
 		
     });
 
@@ -410,6 +413,11 @@ export default function Dashboard() {
                 <Orders isAdmin= {isAdmin}  mydata={Data} increment={updateCount} showAlert={preventDefault}/>
               </Paper>
             </Grid>
+            {/* <Grid item xs={12}>
+              <Paper className={classes.paper}>
+                <staff isAdmin= {isAdmin}  mydata={Data} increment={updateCount} showAlert={preventDefault}/>
+              </Paper>
+            </Grid> */}
           </Grid>
           <Box pt={4}>
             <Copyright />
@@ -439,7 +447,13 @@ export default function Dashboard() {
             <div className="text-box">  
             <TextField id="standard-basic" label="Address" name = "r_address" onChange={onInputChange}  value={state.r_address} required />
             <TextField id="standard-basic" label="Contact No" name = "r_contact" onChange={onInputChange}  value={state.r_contact} required />
+            
             </div>
+            <div className="text-box">  
+            <TextField id="standard-basic" label="Country" name = "r_country" onChange={onInputChange}  value={state.r_country} required />
+
+            </div>
+            
 
             <Title>SENDER</Title>    
             
@@ -450,6 +464,11 @@ export default function Dashboard() {
             <div className="text-box">  
             <TextField id="standard-basic" label="Address" name = "s_address" onChange={onInputChange}  value={state.s_address} required />
             <TextField id="standard-basic" label="Contact No" name = "s_contact" onChange={onInputChange}  value={state.s_contact} required/>
+           
+            </div>
+            <div className="text-box">  
+            <TextField id="standard-basic" label="Country" name = "s_country" onChange={onInputChange}  value={state.s_country} required/>
+
             </div>
 
             <Title>Package</Title> 

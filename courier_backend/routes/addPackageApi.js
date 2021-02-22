@@ -40,11 +40,13 @@ router.post('/', withAuth, async function(req, res, next) {
   package.create({
     packID : idd,
     r_name : req.body.r_name,
+    r_country : req.body.r_country,
     r_nationalId : req.body.r_nID,
     r_address : req.body.r_address, 
     r_contact : req.body.r_contact,
     s_name : req.body.s_name,
     s_nationalId : req.body.s_nID, 
+    s_country : req.body.s_country,
     s_address : req.body.s_address, 
     s_contact : req.body.s_contact,
     status : "Pending",
