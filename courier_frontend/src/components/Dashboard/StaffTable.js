@@ -13,6 +13,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import axios from 'axios';
 
+import {Modal} from 'react-bootstrap'
+
+import TextField from '@material-ui/core/TextField';
 
 
 
@@ -45,6 +48,10 @@ export default function StaffTable(props) {
   const classes = useStyles();
 
 
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
 
   const  deleteStaff = (id) =>
   {
@@ -64,6 +71,7 @@ export default function StaffTable(props) {
   }
   return (
     <React.Fragment>
+     
        <Typography component="p" className="emp-tag" variant="p">
             STAFF DETAILS
        </Typography>
@@ -89,12 +97,13 @@ export default function StaffTable(props) {
               {/* <TableCell >{row.date}</TableCell> */}
               
               <TableCell >{row.email}</TableCell>
-              <TableCell >  <Button
+              <TableCell >   <Button
          variant="contained" size="small"
          className="ml-5"
         style={{background: "#7167f4 ", color: "#fff" , }}
         className={classes.button}
         startIcon={<EditIcon />}
+        onClick={handleShow}
         
       >
         EDIT
@@ -125,6 +134,36 @@ export default function StaffTable(props) {
         </Link>
       </div>
       
+
+      <Modal show={show} onHide={handleClose} style={{marginTop: 50}}>
+        <Modal.Header closeButton>
+         <Typography component="p" className="emp-tag" variant="p">
+              EDIT STAFF
+         </Typography>
+        </Modal.Header>
+        <Modal.Body>
+           
+            <form > 
+            
+            <div className="text-box">  
+            <TextField id="standard-basic" label="Name" />
+            <TextField id="standard-basic" label="NID"  />
+            </div>
+            <div className="text-box">  
+            <TextField id="standard-basic" label="Address" />
+            <TextField id="standard-basic" label="Contact No" />
+            
+            </div>
+            <div className="text-box">  
+            <TextField id="standard-basic" label="Country" />
+            <TextField id="standard-basic" label="Contact No" />
+            </div>
+
+            </form>
+        </Modal.Body>
+        
+      </Modal>
+
     </React.Fragment>
   );
 }
