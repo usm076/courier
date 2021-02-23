@@ -24,7 +24,8 @@ import { mainListItems } from './listItems';
 import Deposits from './Deposits';
 import Orders from './Orders';
 import staff from './staff'
-
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
 import TextField from '@material-ui/core/TextField';
 import Title from './Title';
 import axios from 'axios';
@@ -211,6 +212,9 @@ export default function Dashboard() {
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   const [show, setShow] = useState(false);
+
+  const [showPro, setShowPro] = useState(false);
+
   const [Staffstate, setStaffState] = useState({
     staffName : '',
     staffEmail : '',
@@ -227,6 +231,8 @@ export default function Dashboard() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   
+  const handleProClose = () => setShowPro(false);
+  const handleProShow = () => setShowPro(true);
 
   const [showStaff, setShowStaff] = useState(false);
 
@@ -319,8 +325,20 @@ export default function Dashboard() {
    // myalert === "opacityzero" ? setmyalert("opacityone") : setmyalert("opacityzero")
   }
 
+ 
+  const [anchorEl, setAnchorEl] = useState(null);
 
 
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
+
+  
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const openMenu = Boolean(anchorEl);
 
   return (
     <div className={classes.root}>
@@ -353,10 +371,19 @@ export default function Dashboard() {
           <Typography component="p" variant="p" className="emp-tag middle" style={{marginTop : 6}}>
              Hi , Employee
             </Typography>
-            <div className="emp-box-app">
-                <h1 className="emp-tag-app">EM</h1>
+            <div className="emp-box-app" style={{cursor : 'pointer'}}>
+                <a onClick={handleMenu} ><h1 className="emp-tag-app">EM</h1></a>
             </div>
-             
+            <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                open={openMenu}
+                style={{marginTop : 20}}
+                onClose={handleMenuClose}
+              >
+                <MenuItem onClick={handleProShow}>Edit Profile</MenuItem>
+                <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+              </Menu>
            
             
            </div>
@@ -532,6 +559,36 @@ export default function Dashboard() {
         </Modal.Body>
         
       </Modal>
+
+
+
+      <Modal show={showPro} onHide={handleProClose} style={{marginTop: 50}}>
+        <Modal.Header closeButton>
+         <Typography component="p" className="emp-tag" variant="p">
+              EDIT PROFILE
+         </Typography>
+        </Modal.Header>
+        <Modal.Body>
+           
+            <form > 
+            
+            <div className="text-box">  
+            <TextField id="standard-basic" label="Name" name = "staffName" onChange={onInputChange}  value={state.staffName} required/>
+            <TextField id="standard-basic" label="Email" name = "staffEmail" onChange={onInputChange}  value={state.staffEmail} required/>
+            </div>
+
+            <div className="center-eve">
+            <Button type="submit" variant="contained" style={{background : "#006AEE" , color : "#fff" , width : "82.5%", marginTop : 20}}>
+              Submit
+            </Button>  
+            </div>
+            
+
+            </form>
+        </Modal.Body>
+        
+      </Modal>
+
       
     </div>
   );
