@@ -339,11 +339,7 @@ export default function Orders(props) {
           ))}
         </TableBody>
       </Table>
-      <div className={classes.seeMore}>
-        <Link color="primary" href="#" >
-          See more orders
-        </Link>
-      </div>
+      
       
       <Modal show={showPackage} onHide={handlePackageClose} size="lg" style={{marginTop: 100}}>
         <Modal.Header closeButton>

@@ -406,10 +406,11 @@ export default function Dashboard() {
         <Button variant="contained" onClick={handleShow} style={{background : "#006AEE" , color : "#fff" , width : "82.5%", marginTop : 20}}>
             BOOK COURIER
         </Button>
-          
+          {isAdmin?
         <Button variant="contained" onClick={toggleStaff}  style={{background : "#006AEE" , color : "#fff" , width : "82.5%", marginTop : 20}}>
             {isStaff? "VIEW COURIERS" : "VIEW STAFF"}
         </Button>
+         : null}
                 
             </div> : null} 
         

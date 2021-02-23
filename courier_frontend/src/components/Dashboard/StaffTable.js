@@ -51,6 +51,11 @@ export default function StaffTable(props) {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [state, setState] = useState({
+    staffName : '',
+    staffEmail : '',
+    id : 0
+  })
 
 
   const  deleteStaff = (id) =>
@@ -62,12 +67,65 @@ export default function StaffTable(props) {
       console.log(response);
       props.showAlert(0, response.data.msg);
       props.increment();
+      
 
     }).catch((error)=>{
       console.log(error);
 
     })
 
+  }
+
+  const handleEditStaffSubmit = event =>
+  {
+    event.preventDefault();
+    var authToken = localStorage.getItem('auth-token');
+    axios.post('http://localhost:9000/api/editstaff',{...state},
+    {
+      headers : {
+        'x-auth-token' : authToken
+      }
+    }).then((response)=>{
+      console.log(response);
+      props.showAlert(0, response.data.msg);
+      props.increment();
+      handleClose();
+
+    }).catch((error)=>{
+      console.log(error);
+
+    })
+  }
+
+  const onInputChange = event =>{
+    const { name, value } = event.target;
+      
+        setState({
+          ...state,
+          [name]: value
+        });
+  }
+
+
+  const getEditData = id =>
+  {
+    var authToken = localStorage.getItem('auth-token');
+    axios.post('http://localhost:9000/api/getstaffdata', {id}, {headers : {
+      'x-auth-token' : authToken
+    }}).then((response)=>{
+      console.log(response);
+
+      setState({
+        staffEmail : response.data.email,
+        staffName : response.data.name,
+        id : id
+      });
+      handleShow();
+
+    }).catch((error)=>{
+
+    })
+    
   }
   return (
     <React.Fragment>
@@ -82,6 +140,8 @@ export default function StaffTable(props) {
             <TableCell >Staff Name</TableCell>
             {/* <TableCell >staff name</TableCell> */}
             <TableCell >Staff Email</TableCell>
+            
+
 
             <TableCell >Edit</TableCell>
             <TableCell >Remove staff</TableCell>
@@ -97,13 +157,14 @@ export default function StaffTable(props) {
               {/* <TableCell >{row.date}</TableCell> */}
               
               <TableCell >{row.email}</TableCell>
+             
               <TableCell >   <Button
          variant="contained" size="small"
          className="ml-5"
         style={{background: "#7167f4 ", color: "#fff" , }}
         className={classes.button}
         startIcon={<EditIcon />}
-        onClick={handleShow}
+        onClick={()=>{getEditData(row._id);}}
         
       >
         EDIT
@@ -128,11 +189,7 @@ export default function StaffTable(props) {
           ))}
         </TableBody>
       </Table>
-      <div className={classes.seeMore}>
-        <Link color="primary" href="#" >
-          Add a question
-        </Link>
-      </div>
+      
       
 
       <Modal show={show} onHide={handleClose} style={{marginTop: 50}}>
@@ -143,21 +200,19 @@ export default function StaffTable(props) {
         </Modal.Header>
         <Modal.Body>
            
-            <form > 
+            <form onSubmit={handleEditStaffSubmit}> 
             
             <div className="text-box">  
-            <TextField id="standard-basic" label="Name" />
-            <TextField id="standard-basic" label="NID"  />
+            <TextField id="standard-basic" label="Name" name = "staffName" onChange={onInputChange}  value={state.staffName} required/>
+            <TextField id="standard-basic" label="Email" name = "staffEmail" onChange={onInputChange}  value={state.staffEmail} required/>
             </div>
-            <div className="text-box">  
-            <TextField id="standard-basic" label="Address" />
-            <TextField id="standard-basic" label="Contact No" />
+
+            <div className="center-eve">
+            <Button type="submit" variant="contained" style={{background : "#006AEE" , color : "#fff" , width : "82.5%", marginTop : 20}}>
+              Submit
+            </Button>  
+            </div>
             
-            </div>
-            <div className="text-box">  
-            <TextField id="standard-basic" label="Country" />
-            <TextField id="standard-basic" label="Contact No" />
-            </div>
 
             </form>
         </Modal.Body>
