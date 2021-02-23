@@ -158,6 +158,7 @@ export default function Dashboard() {
 
     const [result, setResult] = useState(null);
     const [Data, setData] = useState([]);
+    const [staffdatafortable, setstaffDataforTable] = useState([]);
 
     const [isStaff, setisStaff] = useState(false);
 
@@ -256,11 +257,14 @@ export default function Dashboard() {
 
         
           packages_data = response.data.packages;
+          // staffdatatable = response.data.StaffData;
           localStorage.setItem("packages",packages_data);
           setData(response.data.packages);
+          setstaffDataforTable(response.data.StaffData);
           //const rows = [createData(packages_data)];
 
           console.log(packages_data);
+          // console.log(staffdatatable);
         
         
         
@@ -284,6 +288,7 @@ export default function Dashboard() {
 
       console.log(response);
       preventDefault(0, response.data.msg);
+      updateCount();
 
     })
     .catch((error)=>{
@@ -389,9 +394,9 @@ export default function Dashboard() {
         <List>{mainListItems}</List>
        
       {open?  <div class="add-ship">
-        <Button variant="contained" style={{background : "#006AEE" , color : "#fff" , width : "82.5%", marginTop : 20}}>
+        {/* <Button variant="contained" style={{background : "#006AEE" , color : "#fff" , width : "82.5%", marginTop : 20}}>
             ADD SHIPMENT
-        </Button>
+        </Button> */}
         {isAdmin?
         <Button variant="contained"  onClick={handleStaffShow} style={{background : "#006AEE" , color : "#fff" , width : "82.5%", marginTop : 20}}>
             ADD STAFF
@@ -401,10 +406,11 @@ export default function Dashboard() {
         <Button variant="contained" onClick={handleShow} style={{background : "#006AEE" , color : "#fff" , width : "82.5%", marginTop : 20}}>
             BOOK COURIER
         </Button>
-
+          {isAdmin? 
         <Button variant="contained" onClick={toggleStaff}  style={{background : "#006AEE" , color : "#fff" , width : "82.5%", marginTop : 20}}>
-            {isStaff? "VIEW SHIPMENTS" : "VIEW STAFF"}
+            {isStaff? "VIEW COURIERS" : "VIEW STAFF"}
         </Button>
+                :null} 
             </div> : null} 
         
       </Drawer>
@@ -421,7 +427,7 @@ export default function Dashboard() {
             {/* Recent Orders */}
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                {isStaff ? <StaffTable/>  :  <Orders isAdmin= {isAdmin}  mydata={Data} increment={updateCount} showAlert={preventDefault}/>}
+                {isStaff ? <StaffTable staffData = {staffdatafortable} showAlert={preventDefault} increment={updateCount}/>  :  <Orders isAdmin= {isAdmin}  mydata={Data} increment={updateCount} showAlert={preventDefault}/>}
               </Paper>
             </Grid>
             {/* <Grid item xs={12}>

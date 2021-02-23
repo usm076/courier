@@ -45,14 +45,29 @@ router.post('/',withAuth, async function(req, res, next) {
             {
               if(userRole.role == 0)
               {
+                User.find({role : 1}, function(StaffError, StaffData)
+                {
+                  if(StaffData)
+                  {
+                
                 res.json({
                   isAdmin : true,
                   pCount : pendingCount,
                   dCount : deliveredCount,
                   tCount : totalCount,
                   status : 200,
-                   packages
+                   packages,
+                   StaffData
                 })
+              }
+              else
+              {
+                res.json({
+                  msg : "There is error in staff api"+StaffError,
+                  status : 200
+                })
+              }
+              })
               }
               else
               {

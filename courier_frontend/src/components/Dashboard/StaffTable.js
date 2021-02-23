@@ -9,6 +9,11 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import axios from 'axios';
+
+
 
 
 // Generate Order Data
@@ -17,11 +22,11 @@ function createData(name, date , responses) {
 }
 
 const rows = [
-  createData('MCAT', '15-10-19', 14),
-  createData('ECAT', '15-10-19', 16),
-  createData('NTS', '15-10-19', 23),
-  createData('GAT', '15-10-19', 65),
-  createData('ARMY', '15-10-19', 43),
+  createData('MCAT', '15-10-19'),
+  createData('ECAT', '15-10-19'),
+  createData('NTS', '15-10-19'),
+  createData('GAT', '15-10-19'),
+  createData('ARMY', '15-10-19'),
 ];
 
 
@@ -38,6 +43,25 @@ const useStyles = makeStyles((theme) => ({
 
 export default function StaffTable(props) {
   const classes = useStyles();
+
+
+
+  const  deleteStaff = (id) =>
+  {
+    var authToken = localStorage.getItem('auth-token');
+    axios.post('http://localhost:9000/api/deletestaff', {id}, {headers : {
+      'x-auth-token' : authToken
+    }}).then((response)=>{
+      console.log(response);
+      props.showAlert(0, response.data.msg);
+      props.increment();
+
+    }).catch((error)=>{
+      console.log(error);
+
+    })
+
+  }
   return (
     <React.Fragment>
        <Typography component="p" className="emp-tag" variant="p">
@@ -47,30 +71,46 @@ export default function StaffTable(props) {
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell >Staff</TableCell>
-            <TableCell >staff name</TableCell>
-            <TableCell >staff age</TableCell>
-            <TableCell align="right">staff life</TableCell>
+            <TableCell >Staff Name</TableCell>
+            {/* <TableCell >staff name</TableCell> */}
+            <TableCell >Staff Email</TableCell>
+
+            <TableCell >Edit</TableCell>
+            <TableCell >Remove staff</TableCell>
 
           </TableRow>
         </TableHead>
         <TableBody>
-        {rows.map((row) => (
+        {props.staffData.map((row) => (
             <TableRow key={row.name}>
               <TableCell component="th" scope="row">
                 {row.name}
               </TableCell>
-              <TableCell >{row.date}</TableCell>
+              {/* <TableCell >{row.date}</TableCell> */}
               
-              <TableCell >{row.responses}</TableCell>
-              <TableCell align="right">  <Button
+              <TableCell >{row.email}</TableCell>
+              <TableCell >  <Button
          variant="contained" size="small"
          className="ml-5"
         style={{background: "#7167f4 ", color: "#fff" , }}
         className={classes.button}
+        startIcon={<EditIcon />}
         
       >
         EDIT
+      </Button>
+      
+      </TableCell>
+      <TableCell >  <Button
+         variant="contained" size="small"
+         className="ml-5"
+         color="secondary"
+        
+        className={classes.button}
+        startIcon={<DeleteIcon />}
+        onClick={()=>{deleteStaff(row._id)}}
+      >
+        Delete
       </Button>
       
       </TableCell>

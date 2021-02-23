@@ -9,6 +9,7 @@ var dashboardData = require('./routes/dashboardDataApi');
 var addPackage = require('./routes/addPackageApi');
 var addPackageDimension = require('./routes/addPackageDimensionApi');
 var deletePackage = require('./routes/deletePackageApi');
+var deleteStaff =  require('./routes/deleteStaffApi');
 var loginRouter = require('./routes/loginApi');
 var addStaffRouter = require('./routes/addStaffApi');
 var getPackageDataRouter = require('./routes/getPackageDataApi');
@@ -63,6 +64,7 @@ app.use(express.static(path.join(__dirname, 'public')));
  app.use('/api/editpackagedata', editPackageRouter);
  app.use('/api/track', trackRouter);
  app.use('/api/generatepdf', pdfRouter);
+ app.use('/api/deletestaff', deleteStaff);
  //Login
 
 
