@@ -28,6 +28,7 @@ import staff from './staff'
 import TextField from '@material-ui/core/TextField';
 import Title from './Title';
 import axios from 'axios';
+import StaffTable from './StaffTable';
 
 function Copyright() {
   return (
@@ -157,6 +158,8 @@ export default function Dashboard() {
 
     const [result, setResult] = useState(null);
     const [Data, setData] = useState([]);
+
+    const [isStaff, setisStaff] = useState(false);
 
     const  handleSubmit = async event => {
       event.preventDefault();
@@ -291,6 +294,10 @@ export default function Dashboard() {
   }
 
 
+  const toggleStaff = () => {
+    setisStaff(!isStaff)
+  }
+
   const onStaffInputChange = event =>{
     const { name, value } = event.target;
       
@@ -394,6 +401,10 @@ export default function Dashboard() {
         <Button variant="contained" onClick={handleShow} style={{background : "#006AEE" , color : "#fff" , width : "82.5%", marginTop : 20}}>
             BOOK COURIER
         </Button>
+
+        <Button variant="contained" onClick={toggleStaff}  style={{background : "#006AEE" , color : "#fff" , width : "82.5%", marginTop : 20}}>
+            {isStaff? "VIEW SHIPMENTS" : "VIEW STAFF"}
+        </Button>
             </div> : null} 
         
       </Drawer>
@@ -410,7 +421,7 @@ export default function Dashboard() {
             {/* Recent Orders */}
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                <Orders isAdmin= {isAdmin}  mydata={Data} increment={updateCount} showAlert={preventDefault}/>
+                {isStaff ? <StaffTable/>  :  <Orders isAdmin= {isAdmin}  mydata={Data} increment={updateCount} showAlert={preventDefault}/>}
               </Paper>
             </Grid>
             {/* <Grid item xs={12}>
