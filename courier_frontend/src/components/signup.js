@@ -20,7 +20,7 @@ export default function Signup() {
         .post('http://localhost:9000/register', { ...state })
         .then(response => {
           console.log(response);
-          if(response.status==200)
+          if(response.data.proceed==0)
           {
           //reRef.current.reset();
            // alert("redirection successfull");
@@ -29,10 +29,7 @@ export default function Signup() {
           }
           else
           {
-          //reRef.current.reset();
-  
           
-          //console.log(response.data[0].msg);
           setResult({
           success: true,
           message: response.data[0].msg
@@ -46,11 +43,12 @@ export default function Signup() {
         });
       }
         })
-        .catch(() => {
-        setResult({
-          success: false,
-          message: 'Something went wrong. Try again later'
-        });
+        .catch((error) => {
+          console.log(error);
+        // setResult({
+        //   success: false,
+        //   message: error
+        // });
         });
       };
 

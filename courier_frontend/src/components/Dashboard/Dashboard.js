@@ -228,11 +228,41 @@ export default function Dashboard() {
     dCount : 0
   })
 
+  const [profile, setProfile] = useState({
+    profileName : '',
+    profileEmail : '',
+    profilePass : ''
+  });
+
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   
   const handleProClose = () => setShowPro(false);
   const handleProShow = () => setShowPro(true);
+
+  const getprofileData = () =>{
+    var authToken = localStorage.getItem('auth-token');
+    axios.post('http://localhost:9000/api/getprofile', {usman : "usman"}, {
+      headers : {
+        'x-auth-token' : authToken
+      }
+    }).then((response)=>{
+
+      console.log(response);
+      setProfile({
+        profileName : response.data.name,
+        profileEmail : response.data.email,
+        profilePass : response.data.pass
+      });
+      handleProShow();
+
+
+
+    }).catch((error)=>{
+      console.log(error);
+
+    })
+  }
 
   const [showStaff, setShowStaff] = useState(false);
 
@@ -317,6 +347,16 @@ export default function Dashboard() {
           [name]: value
         });
   }
+
+  const onProfileInputChange = event =>{
+    const { name, value } = event.target;
+      
+        setProfile({
+          ...profile,
+          [name]: value
+        });
+  }
+
   function preventDefault(event, msg) {
     //event.preventDefault();
     setalertText(msg);
@@ -339,6 +379,28 @@ export default function Dashboard() {
   };
 
   const openMenu = Boolean(anchorEl);
+  const logmeOut = () =>{
+    localStorage.setItem('auth-token', 123);
+    window.location.href = '/login';
+  }
+  const handleProfileEditSubmit = event =>{
+    event.preventDefault();
+    var authToken = localStorage.getItem('auth-token');
+    axios.post('http://localhost:9000/api/editprofile', {...profile}, {
+      headers : {
+        'x-auth-token' : authToken
+      }
+    }).then((response)=>{
+      
+      preventDefault(0, response.data.msg);
+      handleProClose();
+
+
+    }).catch((error)=>{
+      console.log(error);
+
+    })
+  }
 
   return (
     <div className={classes.root}>
@@ -369,7 +431,7 @@ export default function Dashboard() {
           <div className="d-flex" >
 
           <Typography component="p" variant="p" className="emp-tag middle" style={{marginTop : 6}}>
-             Hi , Employee
+          {isAdmin?   "Hi, Admin": "Hi, Staff"}
             </Typography>
             <div className="emp-box-app" style={{cursor : 'pointer'}}>
                 <a onClick={handleMenu} ><h1 className="emp-tag-app">EM</h1></a>
@@ -381,8 +443,8 @@ export default function Dashboard() {
                 style={{marginTop : 20}}
                 onClose={handleMenuClose}
               >
-                <MenuItem onClick={handleProShow}>Edit Profile</MenuItem>
-                <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
+                <MenuItem onClick={getprofileData}>Edit Profile</MenuItem>
+                <MenuItem onClick={logmeOut}>Logout</MenuItem>
               </Menu>
            
             
@@ -570,11 +632,15 @@ export default function Dashboard() {
         </Modal.Header>
         <Modal.Body>
            
-            <form > 
+            <form onSubmit={handleProfileEditSubmit} > 
             
             <div className="text-box">  
-            <TextField id="standard-basic" label="Name" name = "staffName" onChange={onInputChange}  value={state.staffName} required/>
-            <TextField id="standard-basic" label="Email" name = "staffEmail" onChange={onInputChange}  value={state.staffEmail} required/>
+            <TextField id="standard-basic" label="Name" name = "profileName" onChange={onProfileInputChange}  value={profile.profileName} required/>
+            <TextField id="standard-basic" label="Email" name = "profileEmail" onChange={onProfileInputChange}  value={profile.profileEmail} required/>
+            </div>
+            <div className="text-box">  
+            <TextField id="standard-basic" label="Password" name = "profilePass" onChange={onProfileInputChange}  value={profile.profilePass} required/>
+            {/* <TextField id="standard-basic" label="Email" name = "profileEmail" onChange={onProfileInputChange}  value={profile.email} required/> */}
             </div>
 
             <div className="center-eve">

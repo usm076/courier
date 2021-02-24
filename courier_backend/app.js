@@ -18,6 +18,8 @@ var editPackageRouter = require('./routes/editPackageApi');
 var trackRouter = require('./routes/trackApi');
 var pdfRouter = require('./routes/pdfApi');
 var editStaffRouter = require('./routes/editStaffApi');
+var getProfileRouter = require('./routes/getProfileApi');
+var editProfileRouter = require('./routes/editProfileApi');
 
 //var PinRouter = require('./routes/pinApi.js');
 var bodyParser = require('body-parser');
@@ -69,6 +71,8 @@ app.use(express.static(path.join(__dirname, 'public')));
  app.use('/api/deletestaff', deleteStaff);
  app.use('/api/getstaffdata', getStaffDataRouter);
  app.use('/api/editstaff', editStaffRouter);
+ app.use('/api/getprofile', getProfileRouter);
+ app.use('/api/editprofile', editProfileRouter);
  //Login
 
 
