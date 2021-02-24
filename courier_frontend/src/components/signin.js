@@ -48,13 +48,13 @@ export default function Signin() {
                 </div>
                 <form onSubmit={handleSubmit}>
                   <div class="form-group first">
-                    <label for="username">Email</label>
-                    <input type="text" class="form-control" name="email" onChange={onInputChange}  value={state.email} required/>
+                  
+                    <input type="text" placeholder="Email" class="form-control" name="email" onChange={onInputChange}  value={state.email} required/>
     
                   </div>
                   <div class="form-group last mb-3">
-                    <label for="password">password</label>
-                    <input type="password" class="form-control" id="password" name="pass" onChange={onInputChange}  value={state.pass} required/>
+                    
+                    <input type="password" placeholder="Password" class="form-control" id="password" name="pass" onChange={onInputChange}  value={state.pass} required/>
                     
                   </div>
                   

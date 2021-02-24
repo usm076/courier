@@ -84,7 +84,7 @@ h2 {
       -o-transition: .3s all ease;
       transition: .3s all ease; }
     .half .contents .form-group input:focus + label, .half .bg .form-group input:focus + label {
-      top: 17% !important;
+      color: red !important;
     
     }
     .half .contents .form-group.first, .half .bg .form-group.first {
@@ -109,7 +109,8 @@ h2 {
       font-size: 12px;
       display: block;
       margin-bottom: 0;
-      color: #b3b3b3; }
+      color: #b3b3b3;
+     }
     .half .contents .form-group.field--not-empty label, .half .bg .form-group.field--not-empty label {
       margin-top: -20px; }
   .half .contents .form-control, .half .bg .form-control {
@@ -129,7 +130,11 @@ h2 {
   box-shadow: 0 0 20px 0 rgba(0,0,0,0.35);
 }
 .form-control::placeholder {
-  color: red;
+  font-size: 12px;
+  display: block;
+  margin-bottom: 0;
+  color: #b3b3b3;
+
 }
 .half a {
   color: #888;

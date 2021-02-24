@@ -86,20 +86,18 @@ export default function Signup() {
                 <form onSubmit={handleSubmit} >
 
                 <div class="form-group first">
-                    <label for="username">Email</label>
-                    <input type="email" class="form-control" name="email" onChange={onInputChange}  value={state.email} required/>
+                   
+                    <input type="email" placeholder="Email" class="form-control" name="email" onChange={onInputChange}  value={state.email} required/>
     
                 </div>
 
                   <div class="form-group middle">
-                    <label for="username">Name</label>
-                    <input type="text" class="form-control" name="name" onChange={onInputChange}  value={state.name} required/>
+                    <input type="text" placeholder="Name" class="form-control" name="name" onChange={onInputChange}  value={state.name} required/>
     
                   </div>
 
                   <div class="form-group last mb-3">
-                    <label for="password">Password</label>
-                    <input type="password" class="form-control" name="pass" onChange={onInputChange}  value={state.pass} required/>
+                    <input type="password" placeholder="Password" class="form-control" name="pass" onChange={onInputChange}  value={state.pass} required/>
                     
                   </div>
                   
