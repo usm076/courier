@@ -6,13 +6,10 @@ import ListSubheader from '@material-ui/core/ListSubheader';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PeopleIcon from '@material-ui/icons/People';
-import BarChartIcon from '@material-ui/icons/BarChart';
-import LayersIcon from '@material-ui/icons/Layers';
-import AssignmentIcon from '@material-ui/icons/Assignment';
 
 export const mainListItems = (
   <div>
-    <ListItem button>
+    {/* <ListItem button>
       <ListItemIcon>
         <DashboardIcon style={{color : "#006AEE", transform : "translateX(25%)"}}/>
       </ListItemIcon >
@@ -29,6 +26,6 @@ export const mainListItems = (
         <PeopleIcon style={{color : "#006AEE", transform : "translateX(25%)"}}/>
       </ListItemIcon>
       <ListItemText primary="Customer List" />
-    </ListItem>
+    </ListItem> */}
   </div>
 );
