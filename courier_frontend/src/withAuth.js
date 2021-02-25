@@ -11,6 +11,7 @@ export default function withAuth(ComponentToProtect) {
     }
     componentDidMount() {
       const token = localStorage.getItem('auth-token');
+      console.log(token);
       if(token != undefined)
       {
     fetch('http://localhost:9000/checkToken', {

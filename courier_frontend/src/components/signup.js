@@ -76,7 +76,7 @@ export default function Signup() {
               <div class="col-md-7">
                 <div class="mb-4">
                   <h3>Sign Up</h3>
-                  <p class="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p>
+                  <p class="mb-4">Kindly fill this form to proceed</p>
                 </div>
                 {result && (
                 <p className={`${result.success ? 'success' : 'error'}`}>

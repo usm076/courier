@@ -35,13 +35,24 @@ router.post('/',[
   ], async function(req, res, next) {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      console.log(errors.array());
-      return res.send(errors.array());
+      // sendErrorResponse();
+      function sendErrorResponse(){
+        res.json({
+                      
+          proceed : 1,
+          msg : "Invalid Format",
+          status :200
+          
+        })
+      }
+      // console.log(errors.array());
+      // return res.send(errors.array());
       
     }
-    User.findOne({email : req.body.email, pass : req.body.pass}, function(error, user)
+    User.findOne({email : req.body.email, pass : req.body.pass}, function(error, found)
     {
-        const payload =  user.id;
+      if(found){
+        const payload =  found.id;
                 jwt.sign(payload, "usman123", {
                 // expiresIn : 3600
 
@@ -49,15 +60,37 @@ router.post('/',[
                 (error, token) => {
                 if(error) throw error;
                 res.json({
+                  proceed : 0,
                 token, 
                 status : 200,
                 })
                 }
                 )
+              }
+              else
+              {
+                res.json({
+                  
+                  proceed : 1,
+                  msg : "Invalid Credentials",
+                  status :200
+                  
+                })
+                
+              }
     })
 
-    
+    // function sendErrorResponse(){
+    //   res.json({
+                    
+    //     proceed : 1,
+    //     msg : "Invalid Credentials",
+    //     status :200
+        
+    //   })
+    // }
   })
+  
 
 
 module.exports = router;
