@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
   },
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 120,
+    minWidth: '23ch',
   
   },
 }));
@@ -82,9 +82,9 @@ export default function Orders(props) {
   const [showPackage, setShowPackage] = useState(false);
 
   const handlePackageClose = () => setShowPackage(false);
-  const handlePackageShow = () => setShowPackage(true);
+  const handlePackageShow = () => setShowPackage(false);
 
-  const [showEdit, setShowEdit] = useState(false);
+  const [showEdit, setShowEdit] = useState(true);
 
   const handleEditClose = () => setShowEdit(false);
   const handleEditShow = () => {
@@ -407,11 +407,19 @@ export default function Orders(props) {
             <div className="text-box">  
             <TextField id="standard-basic" label="Weight" name = "p_weight" onChange={oneditFormChange}  value={edit.p_weight}  required />
             {/* <TextField id="standard-basic" label="Contact No" name = "s_c" onChange={oneditFormChange}  value={edit.s_c}  required/> */}
-            </div>
-            <Select labelId="demo-simple-select-label" id="demo-simple-select" name="status" value={edit.status} onChange={oneditFormChange}>
+          
+                
+     <FormControl className={classes.formControl}>
+            <InputLabel id="demo-simple-select-label-dimension">Delivery Status</InputLabel>
+            <Select labelId="demo-simple-select-label-dimension"  id="demo-simple-select" name="status" value={edit.status} onChange={oneditFormChange}>
             <MenuItem value="Pending" >Pending</MenuItem>
             <MenuItem value="Delivered" >Delivered</MenuItem>
             </Select>
+        
+      </FormControl>
+          
+            </div>
+      
 
             <div className="center-eve">
             <Button type="submit" variant="contained" style={{background : "#006AEE" , color : "#fff" , width : "82.5%", marginTop : 20}}>
