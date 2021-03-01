@@ -17,7 +17,7 @@ const path = require("path");
 var pdf = require("pdf-creator-node");
 
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/courier', {useNewUrlParser: true, useUnifiedTopology: true});
+// mongoose.connect('mongodb://localhost:27017/courier', {useNewUrlParser: true, useUnifiedTopology: true});
 
 var success = 1 ;
 var userid=0;

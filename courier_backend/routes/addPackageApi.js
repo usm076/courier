@@ -12,8 +12,8 @@ dotenv.config();
 const jwt = require('jsonwebtoken');
 const withAuth = require('./middleware/jwtTokenMiddleware');
 
-const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/courier', {useNewUrlParser: true, useUnifiedTopology: true});
+// const mongoose = require('mongoose');
+// mongoose.connect('mongodb://localhost:27017/courier', {useNewUrlParser: true, useUnifiedTopology: true});
 
 
 var success = 1 ;

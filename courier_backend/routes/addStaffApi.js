@@ -13,7 +13,7 @@ const jwt = require('jsonwebtoken');
 const withAuth = require('./middleware/jwtTokenMiddleware');
 
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/courier', {useNewUrlParser: true, useUnifiedTopology: true});
+// mongoose.connect('mongodb://localhost:27017/courier', {useNewUrlParser: true, useUnifiedTopology: true});
 
 // const User = mongoose.model('user', { name: String, email : String, pass : String, verified : Boolean });
 // const EmailVerification = mongoose.model('email_verification', {user_id : String, email: String, pin : String, verified : Boolean, expiryAt : Date});

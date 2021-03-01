@@ -12,8 +12,8 @@ dotenv.config();
 const jwt = require('jsonwebtoken');
 const withAuth = require('./middleware/jwtTokenMiddleware');
 
-const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/courier', {useNewUrlParser: true, useUnifiedTopology: true});
+// const mongoose = require('mongoose');
+// mongoose.connect('mongodb://localhost:27017/courier', {useNewUrlParser: true, useUnifiedTopology: true});
 
 
 var success = 1 ;
@@ -43,6 +43,7 @@ router.post('/',withAuth, async function(req, res, next) {
           package.countDocuments({}, function(totalError, totalCount){
             User.findById({_id : req.jwtId}, function(userError, userRole)
             {
+              if(userRole){
               if(userRole.role == 0)
               {
                 User.find({role : 1}, function(StaffError, StaffData)
@@ -80,6 +81,7 @@ router.post('/',withAuth, async function(req, res, next) {
                    packages
                 })
               }
+            }
             })
             
 

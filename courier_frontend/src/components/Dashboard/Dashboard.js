@@ -391,9 +391,17 @@ export default function Dashboard() {
         'x-auth-token' : authToken
       }
     }).then((response)=>{
+      console.log(response);
+      if(response.msg){
       
       preventDefault(0, response.data.msg);
       handleProClose();
+
+      }
+      else
+      {
+        preventDefault(0, response.data[0].msg);
+      }
 
 
     }).catch((error)=>{
@@ -492,7 +500,7 @@ export default function Dashboard() {
         </Button>
 
         : null}
-        <Button variant="contained" onClick={handleShow} style={{background : "#006AEE" , color : "#fff" , width : "82.5%", marginTop : 20}}>
+        <Button variant="contained" onClick={()=>{handleShow();}} style={{background : "#006AEE" , color : "#fff" , width : "82.5%", marginTop : 20}}>
             BOOK COURIER
         </Button>
           {isAdmin?

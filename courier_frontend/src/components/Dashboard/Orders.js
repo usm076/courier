@@ -82,9 +82,9 @@ export default function Orders(props) {
   const [showPackage, setShowPackage] = useState(false);
 
   const handlePackageClose = () => setShowPackage(false);
-  const handlePackageShow = () => setShowPackage(false);
+  const handlePackageShow = () => setShowPackage(true);
 
-  const [showEdit, setShowEdit] = useState(true);
+  const [showEdit, setShowEdit] = useState(false);
 
   const handleEditClose = () => setShowEdit(false);
   const handleEditShow = () => {
@@ -124,6 +124,7 @@ export default function Orders(props) {
             packagetoedit_id : id
         
       })
+      handleEditShow();
 
 
     }).catch((error)=>{
@@ -291,7 +292,8 @@ export default function Orders(props) {
         color="primary"
         size="small"
         className={classes.button}
-        onClick = {()=>{setCurrentId(row._id); callme(row._id); }}
+        onClick = {()=>{ callme(row._id); }}
+        // setCurrentId(row._id);
       >
         Add
       </Button>
@@ -301,7 +303,7 @@ export default function Orders(props) {
         variant="contained"
         color="info"
         size="small"
-        onClick = {()=>{handleEditShow();
+        onClick = {()=>{
         editData(row._id);
         }}
         className={classes.button}

@@ -14,7 +14,7 @@ const withAuth = require('./middleware/jwtTokenMiddleware');
 var package = require('./schemas/mongo_package');
 
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/courier', {useNewUrlParser: true, useUnifiedTopology: true});
+// mongoose.connect('mongodb://localhost:27017/courier', {useNewUrlParser: true, useUnifiedTopology: true});
 
 router.post('/',withAuth, async function(req, res, next) {
     

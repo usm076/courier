@@ -20,6 +20,11 @@ var pdfRouter = require('./routes/pdfApi');
 var editStaffRouter = require('./routes/editStaffApi');
 var getProfileRouter = require('./routes/getProfileApi');
 var editProfileRouter = require('./routes/editProfileApi');
+const connectDB = require('./config/db')
+
+
+//MongoDB Connection
+connectDB();
 
 //var PinRouter = require('./routes/pinApi.js');
 var bodyParser = require('body-parser');
