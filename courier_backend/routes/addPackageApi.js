@@ -71,6 +71,8 @@ else
     r_nationalId : req.body.r_nID,
     r_address : req.body.r_address, 
     r_contact : req.body.r_contact,
+    s_country : req.body.s_country,
+    r_country : req.body.r_country,
     s_name : req.body.s_name,
     s_nationalId : req.body.s_nID, 
     s_address : req.body.s_address, 
